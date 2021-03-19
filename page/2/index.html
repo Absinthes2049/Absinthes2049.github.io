@@ -25,27 +25,27 @@
   <meta name="description" content="就做了一点微小的工作，谢谢大家">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hovik Yeva">
-<meta property="og:url" content="https://absinthes2049.github.io/archives/2018/06/index.html">
+<meta property="og:url" content="https://absinthes2049.github.io/page/2/index.html">
 <meta property="og:site_name" content="Hovik Yeva">
 <meta property="og:description" content="就做了一点微小的工作，谢谢大家">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Hovik Yeva">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://absinthes2049.github.io/archives/2018/06/">
+<link rel="canonical" href="https://absinthes2049.github.io/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Hovik Yeva</title>
+  <title>Hovik Yeva - Hi there!</title>
   
 
 
@@ -150,51 +150,164 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 12 posts in total. Keep on posting.</span>
-      </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Hovik Yeva">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hovik Yeva">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">Pyplot教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-08 23:34:07" itemprop="dateCreated datePublished" datetime="2017-04-08T23:34:07+08:00">2017-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-15 22:54:30" itemprop="dateModified" datetime="2021-03-15T22:54:30+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2018</span>
+          <blockquote>
+<p>本文为译文，原文<a href="http://matplotlib.org/users/pyplot_tutorial.html" target="_blank" rel="noopener">载于此</a>,本文<a href="https://absinthes2049.github.io/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/">载于此</a>。欢迎转载，但请保留本段文字，尊重作者和译者的权益。спасибо。</p>
+</blockquote>
+<p><code>matplotlib.pyplot</code> 包含一系列 <strong>MATLAB</strong> 风格的绘图函数。每个 matplotlib.pyplot 中的函数对当前图像进行一些修改，例如：产生新的图像，在图像中产生新的绘图区域，在绘图区域中画线，给绘图加上标记，等等。<code>matplotlib.pyplot</code>会自动记住当前的图像和绘图区域，因此这些函数会直接作用在当前的图像上，并且绘图函数会指向当前的坐标系(请注意这里的“坐标系”在大多数情况下是指某一图像的坐标系而非严格数学意义中的多坐标系)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">plt.plot([1,2,3,4])</span><br><span class="line">plt.ylabel(&#39;some numbers&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/figure_1.png" class="" title="figure_1">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-06-27T16:06:43+08:00"
-              content="2018-06-27">
-          06-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2018/06/27/Sublime%20Text3%20+%20CodeBlocks%20%E6%90%AD%E5%BB%BA%20Windows%20%E4%B8%8B%20C++14%20%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" itemprop="url">
-            <span itemprop="name">Sublime Text3 + CodeBlocks 搭建 Windows 下 C++14 编译环境</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
+  
+  
+  
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2017/03/15/%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E5%A4%A9/">
 
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Hovik Yeva">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hovik Yeva">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/15/%E8%87%AA%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E5%A4%A9/" class="post-title-link" itemprop="url">自建博客第一天</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-15 15:25:48" itemprop="dateCreated datePublished" datetime="2017-03-15T15:25:48+08:00">2017-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-21 18:39:47" itemprop="dateModified" datetime="2020-03-21T18:39:47+08:00">2020-03-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>折腾了将近4个小时后，博客终于有模有样了。欢迎来到<a href="https://absinthes2049.github.io/">我的世界</a></p>
+
+      
     </div>
-  </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
