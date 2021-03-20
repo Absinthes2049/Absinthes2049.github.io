@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2021/03/20/test/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd97d12-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -170,7 +170,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/20/test/" class="post-title-link" itemprop="url">test</a>
+            <a href="/posts/2dd97d12-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">test</a>
         </h2>
 
         <div class="post-meta">
@@ -181,7 +181,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-20 10:19:53 / Modified: 10:40:20" itemprop="dateCreated datePublished" datetime="2021-03-20T10:19:53+08:00">2021-03-20</time>
+              <time title="Created: 2021-03-20 10:19:53 / Modified: 10:51:33" itemprop="dateCreated datePublished" datetime="2021-03-20T10:19:53+08:00">2021-03-20</time>
             </span>
 
           
@@ -215,7 +215,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2021/03/20/%E5%B0%86%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF%EF%BC%8C%E5%B9%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd9a420-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -229,7 +229,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/20/%E5%B0%86%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF%EF%BC%8C%E5%B9%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" class="post-title-link" itemprop="url">将当前日期时间复制到剪切板，并添加到右键菜单</a>
+            <a href="/posts/2dd9a420-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">将当前日期时间复制到剪切板，并添加到右键菜单</a>
         </h2>
 
         <div class="post-meta">
@@ -240,7 +240,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-20 01:00:45 / Modified: 10:40:20" itemprop="dateCreated datePublished" datetime="2021-03-20T01:00:45+08:00">2021-03-20</time>
+              <time title="Created: 2021-03-20 01:00:45 / Modified: 10:51:33" itemprop="dateCreated datePublished" datetime="2021-03-20T01:00:45+08:00">2021-03-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,12 +263,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在<a href="/2020/05/03/%E5%B0%86%E6%97%A5%E6%9C%9F%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF/" title="这篇文章">这篇文章</a>中实现了用 Python 将当前时间复制到剪切板中。这篇文章将进一步实现在 Windows 桌面右键菜单中加入这个功能。</p>
+          <p>在<a href="/posts/2dd9a421-8927-11eb-87c0-1d8cbabb0af5/" title="这篇文章">这篇文章</a>中实现了用 Python 将当前时间复制到剪切板中。这篇文章将进一步实现在 Windows 桌面右键菜单中加入这个功能。</p>
 <h3 id="首先是-Python-实现："><a href="#首先是-Python-实现：" class="headerlink" title="首先是 Python 实现："></a>首先是 Python 实现：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time, pyperclip</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_time</span><span class="params">()</span>:</span></span><br><span class="line">    time_str = time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime())</span><br><span class="line">    pyperclip.copy(time_str)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    get_time()</span><br></pre></td></tr></table></figure>
 <p>保存以上代码为 get_time.pyw.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/20/%E5%B0%86%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF%EF%BC%8C%E5%B9%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/#more" rel="contents">
+              <a class="btn" href="/posts/2dd9a420-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -292,7 +292,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2021/03/19/PyQT5_learning_notes/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd95600-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -306,7 +306,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/19/PyQT5_learning_notes/" class="post-title-link" itemprop="url">PyQT5 学习笔记</a>
+            <a href="/posts/2dd95600-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">PyQT5 学习笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -323,7 +323,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:19" itemprop="dateModified" datetime="2021-03-20T10:40:19+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -365,7 +365,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2021/03/15/%E7%94%A8%20Python%20%E5%AE%9E%E7%8E%B0%20Expand%20from%20List/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd9a424-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -379,7 +379,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/15/%E7%94%A8%20Python%20%E5%AE%9E%E7%8E%B0%20Expand%20from%20List/" class="post-title-link" itemprop="url">用 Python 实现 Expand from List</a>
+            <a href="/posts/2dd9a424-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">用 Python 实现 Expand from List</a>
         </h2>
 
         <div class="post-meta">
@@ -396,7 +396,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -427,7 +427,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+-------------------------------------+------------+</span><br><span class="line">|               Company               |   Field    |</span><br><span class="line">+-------------------------------------+------------+</span><br><span class="line">| [UBC, GoldmanSachs, Morgan Stanley] |  Finance   |</span><br><span class="line">|     [Amazon, Microsoft, Huawei]     | Technology |</span><br><span class="line">|               [Pfizer]              |   Pharma   |</span><br><span class="line">+-------------------------------------+------------+</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/15/%E7%94%A8%20Python%20%E5%AE%9E%E7%8E%B0%20Expand%20from%20List/#more" rel="contents">
+              <a class="btn" href="/posts/2dd9a424-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -451,7 +451,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2020/05/03/%E5%B0%86%E6%97%A5%E6%9C%9F%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd9a421-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -465,7 +465,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/03/%E5%B0%86%E6%97%A5%E6%9C%9F%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF/" class="post-title-link" itemprop="url">将日期复制到剪切板</a>
+            <a href="/posts/2dd9a421-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">将日期复制到剪切板</a>
         </h2>
 
         <div class="post-meta">
@@ -482,7 +482,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -512,7 +512,7 @@
 <h2 id="简单的实现过程"><a href="#简单的实现过程" class="headerlink" title="简单的实现过程"></a>简单的实现过程</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/05/03/%E5%B0%86%E6%97%A5%E6%9C%9F%E5%A4%8D%E5%88%B6%E5%88%B0%E5%89%AA%E5%88%87%E6%9D%BF/#more" rel="contents">
+              <a class="btn" href="/posts/2dd9a421-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -536,7 +536,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2018/12/20/Sublime-Text3-Tex-Live-2018-LaTexTools-SumatraPDF-%E6%90%AD%E5%BB%BA-Windows-%E4%B8%8B-LaTex-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -550,7 +550,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/12/20/Sublime-Text3-Tex-Live-2018-LaTexTools-SumatraPDF-%E6%90%AD%E5%BB%BA-Windows-%E4%B8%8B-LaTex-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">Sublime Text3 + Tex Live 2018 + LaTexTools + SumatraPDF 搭建 Windows 下 LaTex 编译环境</a>
+            <a href="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">Sublime Text3 + Tex Live 2018 + LaTexTools + SumatraPDF 搭建 Windows 下 LaTex 编译环境</a>
         </h2>
 
         <div class="post-meta">
@@ -567,7 +567,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:19" itemprop="dateModified" datetime="2021-03-20T10:40:19+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
 
           
@@ -583,11 +583,11 @@
       
           <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><a href="https://www.sublimetext.com/3" target="_blank" rel="noopener">Sublime Text3</a><br><a href="https://www.tug.org/texlive/acquire-iso.html" target="_blank" rel="noopener">Tex Live 2018</a><br><a href="https://latextools.readthedocs.io/" target="_blank" rel="noopener">LaTexTools</a><br><a href="https://www.sumatrapdfreader.org/download-free-pdf-viewer.html" target="_blank" rel="noopener">SumatraPDF</a></p>
 <h2 id="安装-Tex-Live-2018"><a href="#安装-Tex-Live-2018" class="headerlink" title="安装 Tex Live 2018"></a>安装 Tex Live 2018</h2><p>在 Windows 10 中可以右击下载的 ISO 文件选择”挂载”(非 Windows 10 系统可以用 Winrar 等工具解压该文件)，然后以管理员身份运行 install-tl-windows.bat 脚本。</p>
-<img src="/2018/12/20/Sublime-Text3-Tex-Live-2018-LaTexTools-SumatraPDF-%E6%90%AD%E5%BB%BA-Windows-%E4%B8%8B-LaTex-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/2.jpg" class="" title="TexLive安装界面">
+<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/2.jpg" class="" title="TexLive安装界面">
 <p>在出现的 GUI 界面中选择合适的配置，安装(一般情况下默认配置即可；习惯用 Texworks 可以保留该编辑器)。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/12/20/Sublime-Text3-Tex-Live-2018-LaTexTools-SumatraPDF-%E6%90%AD%E5%BB%BA-Windows-%E4%B8%8B-LaTex-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/#more" rel="contents">
+              <a class="btn" href="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -611,7 +611,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2018/07/03/Python%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%89%B9%E9%87%8F%E9%87%8D%E5%91%BD%E5%90%8D/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd95602-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -625,7 +625,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/07/03/Python%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%89%B9%E9%87%8F%E9%87%8D%E5%91%BD%E5%90%8D/" class="post-title-link" itemprop="url">Python 实现文件批量重命名</a>
+            <a href="/posts/2dd95602-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">Python 实现文件批量重命名</a>
         </h2>
 
         <div class="post-meta">
@@ -642,7 +642,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -668,7 +668,7 @@
           <p>从 B 站下载了一套 C++程序设计课程，发现下载到本地的视频文件名过于冗长，类似于：<br>“清华大学C++自主学习教程（推荐1.5倍速食用） - 16.2-4-2逗号运算、关系运算、逻辑运算和条件运算(Av20786390,P16).Flv”<br>我们想把文件名精简为”2-4-2逗号运算、关系运算、逻辑运算和条件运算.Flv”。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/07/03/Python%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%89%B9%E9%87%8F%E9%87%8D%E5%91%BD%E5%90%8D/#more" rel="contents">
+              <a class="btn" href="/posts/2dd95602-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -692,7 +692,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2018/07/01/%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%89%BE%E5%9B%9E%E5%87%BA%E8%B5%B0%E7%9A%84%20Crotana/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd97d13-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -706,7 +706,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/07/01/%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%89%BE%E5%9B%9E%E5%87%BA%E8%B5%B0%E7%9A%84%20Crotana/" class="post-title-link" itemprop="url">修改注册表找回出走的 Crotana</a>
+            <a href="/posts/2dd97d13-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">修改注册表找回出走的 Crotana</a>
         </h2>
 
         <div class="post-meta">
@@ -723,7 +723,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -772,7 +772,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2018/06/27/Sublime%20Text3%20+%20CodeBlocks%20%E6%90%AD%E5%BB%BA%20Windows%20%E4%B8%8B%20C++14%20%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd97d10-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -786,7 +786,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/27/Sublime%20Text3%20+%20CodeBlocks%20%E6%90%AD%E5%BB%BA%20Windows%20%E4%B8%8B%20C++14%20%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">Sublime Text3 + CodeBlocks 搭建 Windows 下 C++14 编译环境</a>
+            <a href="/posts/2dd97d10-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">Sublime Text3 + CodeBlocks 搭建 Windows 下 C++14 编译环境</a>
         </h2>
 
         <div class="post-meta">
@@ -803,7 +803,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
 
           
@@ -843,7 +843,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/2018/05/22/%E5%B0%8F%E7%8B%BC%E6%AF%AB%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -857,7 +857,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/05/22/%E5%B0%8F%E7%8B%BC%E6%AF%AB%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">小狼毫输入法安装与配置</a>
+            <a href="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/" class="post-title-link" itemprop="url">小狼毫输入法安装与配置</a>
         </h2>
 
         <div class="post-meta">
@@ -874,7 +874,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:40:20" itemprop="dateModified" datetime="2021-03-20T10:40:20+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
               </span>
 
           
@@ -891,12 +891,12 @@
           <h2 id="几个关键词概括这个输入法框架"><a href="#几个关键词概括这个输入法框架" class="headerlink" title="几个关键词概括这个输入法框架"></a>几个关键词概括这个输入法框架</h2><p>简洁、优雅、安全、个性化</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>在 <a href="https://rime.im/" target="_blank" rel="noopener">https://rime.im/</a> 下载安装包，本文输入法版本为 <code>0.11.1</code>。</p>
 <p>安装完成后切换为小狼毫输入法，初始状态是这样的：</p>
-<img src="/2018/05/22/%E5%B0%8F%E7%8B%BC%E6%AF%AB%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/1.jpg" class="" title="初始状态">
+<img src="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/1.jpg" class="" title="初始状态">
 
 <p>可以看到候选词是竖排的，后选词的个数默认只有 5 个。接下来对此进行修改</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/05/22/%E5%B0%8F%E7%8B%BC%E6%AF%AB%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#more" rel="contents">
+              <a class="btn" href="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
