@@ -29,15 +29,10 @@
 <meta property="og:site_name" content="Hovik Yeva">
 <meta property="og:description" content="几个关键词概括这个输入法框架简洁、优雅、安全、个性化 安装在 https:&#x2F;&#x2F;rime.im&#x2F; 下载安装包，本文输入法版本为 0.11.1。 安装完成后切换为小狼毫输入法，初始状态是这样的：   可以看到候选词是竖排的，后选词的个数默认只有 5 个。接下来对此进行修改">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/1.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/2.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/3.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/4.jpg">
 <meta property="article:published_time" content="2018-05-22T09:50:46.000Z">
-<meta property="article:modified_time" content="2021-03-20T02:51:33.199Z">
+<meta property="article:modified_time" content="2021-03-20T03:11:07.341Z">
 <meta property="article:author" content="Hovik Yeva">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/1.jpg">
 
 <link rel="canonical" href="https://absinthes2049.github.io/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/">
 
@@ -194,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 11:11:07" itemprop="dateModified" datetime="2021-03-20T11:11:07+08:00">2021-03-20</time>
               </span>
 
           
@@ -211,7 +206,7 @@
         <h2 id="几个关键词概括这个输入法框架"><a href="#几个关键词概括这个输入法框架" class="headerlink" title="几个关键词概括这个输入法框架"></a>几个关键词概括这个输入法框架</h2><p>简洁、优雅、安全、个性化</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>在 <a href="https://rime.im/" target="_blank" rel="noopener">https://rime.im/</a> 下载安装包，本文输入法版本为 <code>0.11.1</code>。</p>
 <p>安装完成后切换为小狼毫输入法，初始状态是这样的：</p>
-<img src="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/1.jpg" class="" title="初始状态">
+
 
 <p>可以看到候选词是竖排的，后选词的个数默认只有 5 个。接下来对此进行修改</p>
 <a id="more"></a>
@@ -222,16 +217,16 @@
 <h2 id="更改更改字体、字号，把竖排改为横排"><a href="#更改更改字体、字号，把竖排改为横排" class="headerlink" title="更改更改字体、字号，把竖排改为横排"></a>更改更改字体、字号，把竖排改为横排</h2><p>在用户文件夹里新建 <code>weasel.custom.yaml</code>，在里面输入如下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">patch:</span><br><span class="line">  &quot;style&#x2F;font_face&quot;: &quot;微软雅黑&quot;</span><br><span class="line">  &quot;style&#x2F;font_point&quot;: 13</span><br><span class="line">  &quot;style&#x2F;horizontal&quot;: true</span><br></pre></td></tr></table></figure>
 <p>在开始菜单小狼毫输入法文件夹下点击【小狼毫】重新部署，可以看到部署后的效果：</p>
-<img src="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/2.jpg" class="" title="更改后选词个数、字体、字号，设为横排">
+
 
 <h2 id="更改配色"><a href="#更改配色" class="headerlink" title="更改配色"></a>更改配色</h2><p>继续在 <code>weasel.custom.yaml</code> 里面 <code>patch</code> 下输入如下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">patch:</span><br><span class="line">  &quot;style&#x2F;color_scheme&quot;: minimalism    # 這項用於選中下面定義的新方案</span><br><span class="line">  &quot;preset_color_schemes&#x2F;minimalism&quot;:  # 在配色方案列表裏加入標識爲 starcraft 的新方案</span><br><span class="line">    name: 极简主义／Minimalism</span><br><span class="line">    author: Absinthes &lt;Absinthes@protonmail.com&gt;</span><br><span class="line">    back_color: 0xFFFFFF</span><br><span class="line">    border_color: 0xEDF0EF</span><br><span class="line">    text_color: 0x000000</span><br><span class="line">    hilited_text_color: 0x000000</span><br><span class="line">    hilited_back_color: 0xF7F7E7</span><br><span class="line">    hilited_candidate_text_color: 0x050505</span><br><span class="line">    hilited_candidate_back_color: 0xF7F7E7</span><br><span class="line">    candidate_text_color: 0x000000</span><br><span class="line">    comment_text_color: 0x000000</span><br></pre></td></tr></table></figure>
 <p>这样就定义了一个新的名为极简主义的配色方案，效果如下：</p>
-<img src="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/3.jpg" class="" title="更改后选词个数、字体、字号，设为横排">
+
 
 <p>各项参数具体含义可以参考<a href="https://github.com/rime/home/wiki/CustomizationGuide" target="_blank" rel="noopener">官方wiki</a>。</p>
 <h2 id="添加增强词库"><a href="#添加增强词库" class="headerlink" title="添加增强词库"></a>添加增强词库</h2><p>在 rime 吧精品贴找到<a href="http://tieba.baidu.com/p/4125987751" target="_blank" rel="noopener">「Rime增强计划」——让小狼毫更好用のBetterRime增强包です。</a>,下载增强包的压缩文件，解压后将里面的文件复制粘贴到用户文件夹 <code>~\AppData\Roaming\Rime</code> 中，重新部署后可以实现中英文混输：</p>
-<img src="/posts/2dd9a422-8927-11eb-87c0-1d8cbabb0af5/4.jpg" class="" title="混输">
+
 
 
 <h2 id="设置同步文件夹"><a href="#设置同步文件夹" class="headerlink" title="设置同步文件夹"></a>设置同步文件夹</h2><p>在用户文件夹下 <code>installation.yaml</code> 中加一行：</p>
@@ -351,7 +346,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

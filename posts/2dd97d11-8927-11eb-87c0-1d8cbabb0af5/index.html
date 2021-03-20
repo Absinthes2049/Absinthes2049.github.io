@@ -29,17 +29,10 @@
 <meta property="og:site_name" content="Hovik Yeva">
 <meta property="og:description" content="准备工作Sublime Text3Tex Live 2018LaTexToolsSumatraPDF 安装 Tex Live 2018在 Windows 10 中可以右击下载的 ISO 文件选择”挂载”(非 Windows 10 系统可以用 Winrar 等工具解压该文件)，然后以管理员身份运行 install-tl-windows.bat 脚本。  在出现的 GUI 界面中选择合适的配置，安装(">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/2.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/1.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/3.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/4.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/5.jpg">
-<meta property="og:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/6.gif">
 <meta property="article:published_time" content="2018-12-20T13:48:48.000Z">
-<meta property="article:modified_time" content="2021-03-20T02:51:33.199Z">
+<meta property="article:modified_time" content="2021-03-20T03:11:01.774Z">
 <meta property="article:author" content="Hovik Yeva">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/2.jpg">
 
 <link rel="canonical" href="https://absinthes2049.github.io/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/">
 
@@ -196,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 10:51:33" itemprop="dateModified" datetime="2021-03-20T10:51:33+08:00">2021-03-20</time>
+                <time title="Modified: 2021-03-20 11:11:01" itemprop="dateModified" datetime="2021-03-20T11:11:01+08:00">2021-03-20</time>
               </span>
 
           
@@ -212,7 +205,7 @@
       
         <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p><a href="https://www.sublimetext.com/3" target="_blank" rel="noopener">Sublime Text3</a><br><a href="https://www.tug.org/texlive/acquire-iso.html" target="_blank" rel="noopener">Tex Live 2018</a><br><a href="https://latextools.readthedocs.io/" target="_blank" rel="noopener">LaTexTools</a><br><a href="https://www.sumatrapdfreader.org/download-free-pdf-viewer.html" target="_blank" rel="noopener">SumatraPDF</a></p>
 <h2 id="安装-Tex-Live-2018"><a href="#安装-Tex-Live-2018" class="headerlink" title="安装 Tex Live 2018"></a>安装 Tex Live 2018</h2><p>在 Windows 10 中可以右击下载的 ISO 文件选择”挂载”(非 Windows 10 系统可以用 Winrar 等工具解压该文件)，然后以管理员身份运行 install-tl-windows.bat 脚本。</p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/2.jpg" class="" title="TexLive安装界面">
+
 <p>在出现的 GUI 界面中选择合适的配置，安装(一般情况下默认配置即可；习惯用 Texworks 可以保留该编辑器)。</p>
 <a id="more"></a>
 <h2 id="SumatraPDF-配置"><a href="#SumatraPDF-配置" class="headerlink" title="SumatraPDF 配置"></a>SumatraPDF 配置</h2><p>安装完成后打开 SumatraPDF，点击左上角，选择 设置 -&gt; 选项，在最下方 “请键入双击 PDF 文件时，应运行的命令” 中填入如下命令：</p>
@@ -220,10 +213,10 @@
 <p>也就是 “Sublime Text的安装路径””%f:%l”。</p>
 <h2 id="Sublime-Text3-LaTexTools-的配置"><a href="#Sublime-Text3-LaTexTools-的配置" class="headerlink" title="Sublime Text3 + LaTexTools 的配置"></a>Sublime Text3 + LaTexTools 的配置</h2><p>安装好 Sublime Text 之后，首先安装控制台 <a href="https://packagecontrol.io/installation" target="_blank" rel="noopener">Package Control</a>。</p>
 <p>安装完成之后，Preferences -&gt; Package Control, 在打开的对话框里输入 Inatall Package, </p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/1.jpg" class="" title="Install_Package">
+
 <p>选择第一个选项，然后在弹出的 Inatall Package 对话框中输入 LaTexTools, 找到对应选项点击安装。 安装完成后重启 Sublime Text。</p>
 <p>更新后的 Sublime Text 可以在 Preferences -&gt; Pakage Setting 路径中找到 LaTeXTools 选项，点击该选项下级菜单中的 Settings-User。</p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/3.jpg" class="" title="Settings_User">
+
 <p>在打开的 LaTexTools.sbulime-seeting 文件的第 209 行找到 “Windows” 关键词并将其下面的 dict 更新为以下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&quot;windows&quot;: &#123;</span><br><span class="line">	&#x2F;&#x2F; Path used when invoking tex &amp; friends; &quot;&quot; is fine for MiKTeX</span><br><span class="line">	&#x2F;&#x2F; For TeXlive 2011 (or other years) use</span><br><span class="line">	&#x2F;&#x2F; &quot;texpath&quot; : &quot;C:\\texlive\\2011\\bin\\win32;$PATH&quot;,</span><br><span class="line">	&quot;texpath&quot; : &quot;C:\\Texlive\\2018\\bin\\win32;$PATH&quot;,</span><br><span class="line">	&#x2F;&#x2F; TeX distro: &quot;miktex&quot; or &quot;texlive&quot;</span><br><span class="line">	&quot;distro&quot; : &quot;texlive&quot;,</span><br><span class="line">	&#x2F;&#x2F; Command to invoke Sumatra. If blank, &quot;SumatraPDF.exe&quot; is used (it has to be on your PATH)</span><br><span class="line">	&quot;sumatra&quot;: &quot;C:\\Program Files\\SumatraPDF\\SumatraPDF.exe&quot;,</span><br><span class="line">	&#x2F;&#x2F; Command to invoke Sublime Text. Used if the keep_focus toggle is true.</span><br><span class="line">	&#x2F;&#x2F; If blank, &quot;subl.exe&quot; or &quot;sublime_text.exe&quot; will be used.</span><br><span class="line">	&quot;sublime_executable&quot;: &quot;&quot;,</span><br><span class="line">	&#x2F;&#x2F; how long (in seconds) to wait after the jump_to_pdf command completes</span><br><span class="line">	&#x2F;&#x2F; before switching focus back to Sublime Text. This may need to be</span><br><span class="line">	&#x2F;&#x2F; adjusted depending on your machine and configuration.</span><br><span class="line">	&quot;keep_focus_delay&quot;: 0.5</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
@@ -242,14 +235,14 @@
 <li>…</li>
 </ul>
 <p>解压下载的字体文件后，为了让 xelatex 调用到我们要安装的字体，需要右击字体文件，选择 “为所有用户安装” 来安装字体。</p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/4.jpg" class="" title="为所有用户安装">
+
 <p>安装完成后需要刷新字体缓存， 用管理员权限打开 cmd ，运行下面的命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fc-cache</span><br></pre></td></tr></table></figure>
 
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>用 Sublime Text 打开用 MyriadPro 字体的 tex 文件，<code>ctrl + b</code> 编译文件。</p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/5.jpg" class="" title="编译tex文件">
+
 <p>在 PDF 文档中双击任意位置，可以打开 tex 文件并跳转至文档对应的源码处。</p>
-<img src="/posts/2dd97d11-8927-11eb-87c0-1d8cbabb0af5/6.gif" class="" title="反向搜索">
+
     </div>
 
     
@@ -363,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
