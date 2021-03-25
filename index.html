@@ -156,6 +156,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/9ed508cc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Karen Vazgen">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Karen Vazgen">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/9ed508cc/" class="post-title-link" itemprop="url">20210325-常用的 FFmpeg 命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-25 10:19:18 / Modified: 10:39:39" itemprop="dateCreated datePublished" datetime="2021-03-25T10:19:18+08:00">2021-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>总结下经常用到的 <a href="https://www.ffmpeg.org/" target="_blank" rel="noopener">FFmpeg</a> 命令。</p>
+<ol>
+<li>webm/m4a to mp3<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.m4a&#x2F;.webm -acodec libmp3lame output.mp3</span><br></pre></td></tr></table></figure></li>
+<li>ts to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.ts -vcodec copy -copyts -acodec copy -absf aac_adtstoasc output.mp4</span><br></pre></td></tr></table></figure></li>
+<li>mp4 to avi<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.avi -vcodec mpeg4 -vtag xvid output.avi</span><br></pre></td></tr></table></figure></li>
+<li>webm to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.webm -vcodec libx264 -crf 20 -acodec aac -strict experimental output.mp4</span><br><span class="line">(-crf 参数的取值范围为 0~51，其中 0 为无损模式，数值越大，画质越差，生成的文件越小)</span><br></pre></td></tr></table></figure></li>
+<li>mts to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.m2ts -c:v copy -c:a aac -strict experimental -b:a 128k output.mp4</span><br></pre></td></tr></table></figure></li>
+<li>音频淡入淡出效果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -y -i input.mp3 -af &quot;afade&#x3D;t&#x3D;in:ss&#x3D;0:d&#x3D;4,afade&#x3D;t&#x3D;out:st&#x3D;30:d&#x3D;4&quot; output.mp3</span><br></pre></td></tr></table></figure></li>
+<li>视频淡入淡出效果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf &quot;fade&#x3D;in:0:d&#x3D;[持续时间]:color&#x3D;[过度颜色];fade&#x3D;out:st:d&#x3D;[持续时间]:color&#x3D;[过度颜色]&quot; output</span><br></pre></td></tr></table></figure></li>
+<li>视频截取<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -ss START -t DURATION -i INPUT -vcodec copy -acodec copy OUTPUT</span><br></pre></td></tr></table></figure></li>
+<li>视频画面裁切（去黑边）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf crop&#x3D;OW:OH:x:y output</span><br></pre></td></tr></table></figure></li>
+<li>添加水印<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input1 -i input2 -filter_complex overlay&#x3D;x:y output</span><br></pre></td></tr></table></figure></li>
+<li>delogo<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf delogo&#x3D;x&#x3D;0:y&#x3D;0:w&#x3D;width:h&#x3D;height:enable&#x3D;&#39;between(t,starttime,endtime)&#39; output</span><br></pre></td></tr></table></figure></li>
+<li>设置字幕标题、默认字幕流<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i INPUT -c:v copy -c:a copy -c:s copy -metadata:s:s:0 title&#x3D;中文 -metadata:s:s:0 language&#x3D;chi -disposition:s:0 default OUTPUT</span><br></pre></td></tr></table></figure></li>
+<li>批量转码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for &#x2F;R %v IN (*.avi) do ( ffmpeg -i %v -acodec aac -vcodec libx265  &quot;OUTPUT\%~nv.mkv&quot;)（cmd）</span><br><span class="line">for &#x2F;R %%v IN (*.avi) do ( ffmpeg -i %%v -acodec aac -vcodec libx265  &quot;OUTPUT\%%~nv.mkv&quot;)（script）</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/6b67ba3e/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -880,83 +963,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/31078/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Karen Vazgen">
-      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Karen Vazgen">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/31078/" class="post-title-link" itemprop="url">小狼毫输入法安装与配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-22 17:50:46" itemprop="dateCreated datePublished" datetime="2018-05-22T17:50:46+08:00">2018-05-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 15:59:23" itemprop="dateModified" datetime="2021-03-20T15:59:23+08:00">2021-03-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="几个关键词概括这个输入法框架"><a href="#几个关键词概括这个输入法框架" class="headerlink" title="几个关键词概括这个输入法框架"></a>几个关键词概括这个输入法框架</h2><p>简洁、优雅、安全、个性化</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>在 <a href="https://rime.im/" target="_blank" rel="noopener">https://rime.im/</a> 下载安装包，本文输入法版本为 <code>0.11.1</code>。</p>
-<p>安装完成后切换为小狼毫输入法，初始状态是这样的：</p>
-<img src="/31078/1.jpg" class title="初始状态">
-
-<p>可以看到候选词是竖排的，后选词的个数默认只有 5 个。接下来对此进行修改</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/31078/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1028,20 +1034,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
