@@ -235,6 +235,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/b4cd6816/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Karen Vazgen">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Karen Vazgen">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/b4cd6816/" class="post-title-link" itemprop="url">Python数据结构与算法补全系列(三)--搜索和排序</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-22 23:56:32" itemprop="dateCreated datePublished" datetime="2021-03-22T23:56:32+08:00">2021-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-25 16:38:03" itemprop="dateModified" datetime="2021-03-25T16:38:03+08:00">2021-03-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index"><span itemprop="name">Data Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p>搜索是指从元素集合中找到特定元素的算法过程。搜索通常返回 True 或 False, 分别表示元素是否存在；或者返回目标元素的位置。</p>
+<h3 id="顺序搜索"><a href="#顺序搜索" class="headerlink" title="顺序搜索"></a>顺序搜索</h3><p>存储于列表等集合中的元素彼此存在线性或顺序的关系，每个元素的位置与其他元素相关。在 Python 列表中，元素的位置就是它的下标。因为下标是有序的，所以能够顺序访问，由此可以进行顺序搜索。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无序列表的顺序搜索</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sequential_search</span><span class="params">(alist, item)</span>:</span></span><br><span class="line">    pos = <span class="number">0</span></span><br><span class="line">    found = <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> pos &lt; len(alist) <span class="keyword">and</span> <span class="keyword">not</span> found:</span><br><span class="line">        <span class="keyword">if</span> alist[pos] == item:</span><br><span class="line">            found = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            pos = pos + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> found</span><br></pre></td></tr></table></figure>
+<p>假设列表中的元素按升序排列，搜索的效率会比无序列表高一些：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有序列表的顺序搜索</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ordered_sequential_search</span><span class="params">(alist, item)</span>:</span></span><br><span class="line">    pos = <span class="number">0</span></span><br><span class="line">    found = <span class="literal">False</span></span><br><span class="line">    stop = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">while</span> pos &lt; len(alist) <span class="keyword">and</span> <span class="keyword">not</span> found <span class="keyword">and</span> <span class="keyword">not</span> stop:</span><br><span class="line">        <span class="keyword">if</span> alist[pos] == item:</span><br><span class="line">            found = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> alist[pos] &gt; item:</span><br><span class="line">                stop = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                pos = pos + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> found</span><br></pre></td></tr></table></figure>
+<p>顺序搜索的时间复杂度：O(n)</p>
+<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><p>对于有序列表可以从中间的水元素着手，将其和目标元素比较，这样可以很快地排除一半的元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有序列表的二分搜索</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(alist, item)</span>:</span></span><br><span class="line">    first = <span class="number">0</span></span><br><span class="line">    last = len(alist) - <span class="number">1</span></span><br><span class="line">    found = Fasle</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> first &lt;= last <span class="keyword">and</span> <span class="keyword">not</span> found:</span><br><span class="line">        mid_point = (first + last) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> alist[mid_point] == item:</span><br><span class="line">            found = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> item &lt; alist[mid_point]:</span><br><span class="line">                last = mid_point - <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                first = mid_point + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> found</span><br></pre></td></tr></table></figure>
+<p>二分搜索的递归版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 二分搜索的递归版本</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(alist, item)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(alist) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        mid_point = len(alist) // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> alist[mid_point] == item:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> item &lt; alist[mid_point]:</span><br><span class="line">                <span class="keyword">return</span> binary_search(alist[:midpoint], item)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> binary_search(alist[midpoint+<span class="number">1</span>:], item)</span><br></pre></td></tr></table></figure>
+<p>二分搜索的时间复杂度：O(logn)</p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>排序是指将集合中的元素按某种顺序排列的过程。排序是计算机科学中的一个很重要的研究领域。给大量的元素排序可能销号大量的计算资源。排序算法的效率与待处理的元素数目有关。衡量排序算法的总体效率可以用总比较次数和总交换次数等。</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>冒泡排序多次遍历列表，它比较相邻的元素，将不合顺序的交换，每轮遍历都将下一个最大值放到正确的位置上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> passnum <span class="keyword">in</span> range(len(alist)<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(passnum):</span><br><span class="line">            <span class="keyword">if</span> alist[i] &gt; alist[i + <span class="number">1</span>]:</span><br><span class="line">                alist[i], alist[i + <span class="number">1</span>] = alist[i + <span class="number">1</span>], alist[i]</span><br></pre></td></tr></table></figure>
+<p>冒泡排序通常被认为是效率最低的排序算法，因为在确定最终的位置前必须交换元素。如果在一轮遍历中没有发生元素交换，就可以确定列表已经有序。<br>按照上述思路修改排序算法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 短冒泡</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">short_bubble_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    exchanges = <span class="literal">True</span></span><br><span class="line">    passnum = len(alist) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> passnum &gt; <span class="number">0</span> <span class="keyword">and</span> exchanges:</span><br><span class="line">        exchanges = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(passnum):</span><br><span class="line">            <span class="keyword">if</span> alist[i] &gt; alist[i + <span class="number">1</span>]:</span><br><span class="line">                exchanges = <span class="literal">True</span></span><br><span class="line">                alist[i], alist[i + <span class="number">1</span>] = alist[i + <span class="number">1</span>], alist[i]</span><br><span class="line">                </span><br><span class="line">        passnum = passnum - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>冒泡排序的时间复杂度：O(n^2)</p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序在冒泡排序的基础上做了改进，每次遍历列表时只做一次交换。选择排序在每次遍历时寻找最大值，并在遍历完之后将它放到正确的位置上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">selection_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> fillslot <span class="keyword">in</span> range(len(alist)<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">        position_of_max = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> location <span class="keyword">in</span> range(<span class="number">1</span>, fillslot + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> alist[location] &gt; alist[position_of_max]:</span><br><span class="line">                position_of_max = location</span><br><span class="line">        </span><br><span class="line">        alist[fillslot], alist[position_of_max] = \</span><br><span class="line">        alist[position_of_max], alist[fillslot]</span><br></pre></td></tr></table></figure>
+<p>选择排序与冒泡排序的比较次数相同，但由于减少了交换次数，因此排序算法通常更快。<br>选择排序的时间复杂度：O(n^2)</p>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>插入排序在列表较低的一端维护一个有序的子列表，并逐个将每个新元素插入到这个子列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insertion_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(<span class="number">1</span>, len(alist)):</span><br><span class="line">        </span><br><span class="line">        current_value = alist[index]</span><br><span class="line">        position = index</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> position &gt; <span class="number">0</span> <span class="keyword">and</span> alist[position<span class="number">-1</span>] &gt; current_value:</span><br><span class="line">            alist[position] = alist[position<span class="number">-1</span>]</span><br><span class="line">            position = position<span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">        alist[position] = current_value</span><br></pre></td></tr></table></figure>
+<p>最坏的情况下，插入排序的时间复杂的为O(n^2)</p>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><p>希尔排序也成”递减增量排序”，它对插入排序做了改进，将列表分成数个子列表，并对每一个子列表应用插入排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    sublistcount = len(alist) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> sublistcount &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> startposition <span class="keyword">in</span> range(sublistcount):</span><br><span class="line">            gap_inserttion_sort(alist, startposition, sublistcount)</span><br><span class="line">        </span><br><span class="line">        print(<span class="string">"After increments of size"</span>, sublistcount,</span><br><span class="line">             <span class="string">"The list is"</span>, alist)</span><br><span class="line">        </span><br><span class="line">        sublistcount = sublistcount // <span class="number">2</span></span><br><span class="line">         </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gap_inserttion_sort</span><span class="params">(alist, start, gap)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(start+gap, len(alist), gap):</span><br><span class="line">        </span><br><span class="line">        current_value = alist[i]</span><br><span class="line">        position = i</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> position &gt;= gap <span class="keyword">and</span> \</span><br><span class="line">        alist[position-gap] &gt; current_value:</span><br><span class="line">            alist[position] = alist[position-gap]</span><br><span class="line">            position = position-gap</span><br><span class="line">            </span><br><span class="line">        alist[position] = current_value</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>alist = [<span class="number">54</span>, <span class="number">26</span>, <span class="number">93</span>, <span class="number">17</span>, <span class="number">77</span>, <span class="number">31</span>, <span class="number">44</span>, <span class="number">55</span>, <span class="number">20</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>shell_sort(alist)</span><br><span class="line">After increments of size <span class="number">4</span> The list <span class="keyword">is</span> [<span class="number">20</span>, <span class="number">26</span>, <span class="number">44</span>, <span class="number">17</span>, <span class="number">54</span>, <span class="number">31</span>, <span class="number">93</span>, <span class="number">55</span>, <span class="number">77</span>]</span><br><span class="line">After increments of size <span class="number">2</span> The list <span class="keyword">is</span> [<span class="number">20</span>, <span class="number">17</span>, <span class="number">44</span>, <span class="number">26</span>, <span class="number">54</span>, <span class="number">31</span>, <span class="number">77</span>, <span class="number">55</span>, <span class="number">93</span>]</span><br><span class="line">After increments of size <span class="number">1</span> The list <span class="keyword">is</span> [<span class="number">17</span>, <span class="number">20</span>, <span class="number">26</span>, <span class="number">31</span>, <span class="number">44</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">77</span>, <span class="number">93</span>]</span><br></pre></td></tr></table></figure>
+<p>每一轮的遍历都生成了更有序的列表，这使得最后一次的遍历非常高效。<br>希尔排序的时间复杂度可以达到 O(n^(3/2))</p>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序是一种递归算法，每次讲一个列表一分为二。如果列表为空或只有一个元素，就认为它是有序的（基本情况）；如果不为空就将列表一分为二并调用归并排序。当两部分都有序后，就进行归并操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    print(<span class="string">"Splitting "</span>, alist)</span><br><span class="line">    <span class="keyword">if</span> len(alist) &gt; <span class="number">1</span>:</span><br><span class="line">        mid = len(alist) // <span class="number">2</span></span><br><span class="line">        lefthalf = alist[:mid]</span><br><span class="line">        righthalf = alist[mid:]</span><br><span class="line">        </span><br><span class="line">        merge_sort(lefthalf)</span><br><span class="line">        merge_sort(righthalf)</span><br><span class="line">        </span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        k = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> i &lt; len(lefthalf) <span class="keyword">and</span> j &lt; len(righthalf):</span><br><span class="line">            <span class="keyword">if</span> lefthalf[i] &lt; righthalf[j]:</span><br><span class="line">                alist[k] = lefthalf[i]</span><br><span class="line">                i = i + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                alist[k] = righthalf[j]</span><br><span class="line">                j = j + <span class="number">1</span></span><br><span class="line">            k = k + <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> i &lt; len(lefthalf):</span><br><span class="line">            alist[k] = lefthalf[i]</span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line">            k = k + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">while</span> j &lt; len(righthalf):</span><br><span class="line">            alist[k] = righthalf[j]</span><br><span class="line">            j = j + <span class="number">1</span></span><br><span class="line">            k = k + <span class="number">1</span></span><br><span class="line">    print(<span class="string">"Merging "</span>, alist)</span><br></pre></td></tr></table></figure>
+<p>归并排序的时间复杂度为O(nlogn)</p>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>快速排序首先选出一个基准值，如第一个元素。基准值的作用是帮助切分列表。在最终的有序列表中，基准值的位置通常被称为分割点。算法在分割点切分子列表，并进行对快速排序的子调用。<br>在排序过程中，选出基准值后下一步是分区操作。分区操作的目的是根据待排序元素与基准值的相对大小将他们放到正确的一遍，同时逐渐逼近分割点。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    quick_sort_helper(alist, <span class="number">0</span>, len(alist) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort_helper</span><span class="params">(alist, first, last)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> first &lt; last:</span><br><span class="line">        </span><br><span class="line">        splitpoint = partition(alist, first, last)</span><br><span class="line">        </span><br><span class="line">        quick_sort_helper(alist, first, splitpoint<span class="number">-1</span>)</span><br><span class="line">        quick_sort_helper(alist, splitpoint+<span class="number">1</span>, last)</span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(alist, first, last)</span>:</span></span><br><span class="line">    pivotvalue = alist[first]</span><br><span class="line">    </span><br><span class="line">    leftmark = first + <span class="number">1</span></span><br><span class="line">    rightmark = last</span><br><span class="line">    </span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> done:</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> leftmark &lt;= rightmark <span class="keyword">and</span> \</span><br><span class="line">        alist[leftmark] &lt;= pivotvalue:</span><br><span class="line">            leftmark = leftmark + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">while</span> alist[rightmark] &gt;= pivotvalue <span class="keyword">and</span> \</span><br><span class="line">        rightmark &gt;= leftmark:</span><br><span class="line">            rightmark = rightmark - <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> rightmark &lt; leftmark:</span><br><span class="line">            done = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            temp = alist[leftmark]</span><br><span class="line">            alist[leftmark] = alist[rightmark]</span><br><span class="line">            alist[rightmark] = temp</span><br><span class="line">    </span><br><span class="line">    temp = alist[first]</span><br><span class="line">    alist[first] = alist[rightmark]</span><br><span class="line">    alist[rightmark] = temp</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> rightmark</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>alist = [<span class="number">54</span>, <span class="number">26</span>, <span class="number">93</span>, <span class="number">17</span>, <span class="number">77</span>, <span class="number">31</span>, <span class="number">44</span>, <span class="number">55</span>, <span class="number">20</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>quick_sort(alist)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>alist</span><br><span class="line">[<span class="number">17</span>, <span class="number">20</span>, <span class="number">26</span>, <span class="number">31</span>, <span class="number">44</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">77</span>, <span class="number">93</span>]</span><br></pre></td></tr></table></figure>
+<p>实际操作过程中可使用三数取中法即在选择基准值时考虑列表的头元素、中间元素和尾元素来避免切分不均匀。<br>快速排序的的时间复杂度为O(nlogn),并且不需要像归并排序那样使用额外空间。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/6b67ba3e/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -894,77 +1003,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/6521/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Karen Vazgen">
-      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Karen Vazgen">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/6521/" class="post-title-link" itemprop="url">Sublime Text3 + CodeBlocks 搭建 Windows 下 C++14 编译环境</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-27 16:06:43" itemprop="dateCreated datePublished" datetime="2018-06-27T16:06:43+08:00">2018-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-20 11:11:25" itemprop="dateModified" datetime="2021-03-20T11:11:25+08:00">2021-03-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="所需安装包"><a href="#所需安装包" class="headerlink" title="所需安装包"></a>所需安装包</h2><p><a href="https://www.sublimetext.com/3" target="_blank" rel="noopener">Sublime Text3</a><br><a href="http://www.codeblocks.org/downloads/26" target="_blank" rel="noopener">Codeblocks(mingw-setup)</a></p>
-<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><p>分别安装 Sublime Text 和 Codeblocks，并且把 Codeblocks 安装目录下 MinGW 文件夹目录添加到环境变量中。</p>
-<p>配置 Codeblocks：Setting –&gt; Compiler，在“Have g++ follow the C++14 ISO C++ language standard [-std=c++14]” 选项上打勾、保存。</p>
-<p>配置 Sublime Text：Tools –&gt; Build System –&gt; New Build System</p>
-<p>粘贴下面的代码(注意 CodeBlocks 的目录)：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;cmd&quot;: [&quot;g++&quot;, &quot;-std&#x3D;c++14&quot;,&quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;file_path&#125;&#x2F;$&#123;file_base_name&#125;.exe&quot;],</span><br><span class="line">    &quot;file_regex&quot;: &quot;^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$&quot;,</span><br><span class="line">    &quot;working_dir&quot;: &quot;$&#123;file_path&#125;&quot;,</span><br><span class="line">    &quot;selector&quot;: &quot;source.c++&quot;,</span><br><span class="line">    &quot;encoding&quot;: &quot;cp936&quot;,</span><br><span class="line">    &quot;shell&quot;: true,</span><br><span class="line">    &quot;variants&quot;:</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;Run&quot;,</span><br><span class="line">            &quot;cmd&quot;: [&quot;start&quot;,&quot;~&#x2F;CodeBlocks&#x2F;cb_console_runner.exe&quot;,&quot;$&#123;file_path&#125;&#x2F;$&#123;file_base_name&#125;&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>保存为 C++.sublime-build.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1036,7 +1074,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
