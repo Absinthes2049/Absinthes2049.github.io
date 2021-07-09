@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="总结下经常用到的 FFmpeg 命令。  webm&#x2F;m4a to mp31ffmpeg -i input.m4a&#x2F;.webm -acodec libmp3lame output.mp3 ts to mp41ffmpeg -i input.ts -vcodec copy -copyts -acodec copy -absf aac_adtstoasc output.mp4 mp4 to a">
+  <meta name="description" content="假设我们有如下数据：     年龄 拥有的汽车数量 是否有房子 子女数量 婚姻状况 是否养狗 是否买过船    0 66 1 是 2 丧偶 否 是   1 52 2 是 3 已婚 否 是   2 22 0 否 0 已婚 是 否   3 25 1 否 1 单身 否 否   4 44 0 否 2 离异 是 否">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用的 FFmpeg 命令">
-<meta property="og:url" content="https://absinthes2049.github.io/9ed508cc/index.html">
+<meta property="og:title" content="泛化，过拟合和欠拟合">
+<meta property="og:url" content="https://absinthes2049.github.io/ea5305b3/index.html">
 <meta property="og:site_name" content="Karen Vazgen">
-<meta property="og:description" content="总结下经常用到的 FFmpeg 命令。  webm&#x2F;m4a to mp31ffmpeg -i input.m4a&#x2F;.webm -acodec libmp3lame output.mp3 ts to mp41ffmpeg -i input.ts -vcodec copy -copyts -acodec copy -absf aac_adtstoasc output.mp4 mp4 to a">
+<meta property="og:description" content="假设我们有如下数据：     年龄 拥有的汽车数量 是否有房子 子女数量 婚姻状况 是否养狗 是否买过船    0 66 1 是 2 丧偶 否 是   1 52 2 是 3 已婚 否 是   2 22 0 否 0 已婚 是 否   3 25 1 否 1 单身 否 否   4 44 0 否 2 离异 是 否">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-25T02:19:18.000Z">
-<meta property="article:modified_time" content="2021-03-25T02:45:21.493Z">
+<meta property="article:published_time" content="2021-07-08T14:43:37.000Z">
+<meta property="article:modified_time" content="2021-07-09T00:40:59.358Z">
 <meta property="article:author" content="Karen Vazgen">
-<meta property="article:tag" content="FFmpeg">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://absinthes2049.github.io/9ed508cc/">
+<link rel="canonical" href="https://absinthes2049.github.io/ea5305b3/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>常用的 FFmpeg 命令 | Karen Vazgen</title>
+  <title>泛化，过拟合和欠拟合 | Karen Vazgen</title>
   
 
 
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/9ed508cc/">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/ea5305b3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -173,7 +173,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          常用的 FFmpeg 命令
+          泛化，过拟合和欠拟合
         </h1>
 
         <div class="post-meta">
@@ -182,17 +182,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-03-25 10:19:18 / Modified: 10:45:21" itemprop="dateCreated datePublished" datetime="2021-03-25T10:19:18+08:00">2021-03-25</time>
+              <time title="Created: 2021-07-08 22:43:37" itemprop="dateCreated datePublished" datetime="2021-07-08T22:43:37+08:00">2021-07-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-09 08:40:59" itemprop="dateModified" datetime="2021-07-09T08:40:59+08:00">2021-07-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
                 </span>
             </span>
 
@@ -207,23 +213,156 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>总结下经常用到的 <a href="https://www.ffmpeg.org/" target="_blank" rel="noopener">FFmpeg</a> 命令。</p>
-<ol>
-<li>webm/m4a to mp3<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.m4a&#x2F;.webm -acodec libmp3lame output.mp3</span><br></pre></td></tr></table></figure></li>
-<li>ts to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.ts -vcodec copy -copyts -acodec copy -absf aac_adtstoasc output.mp4</span><br></pre></td></tr></table></figure></li>
-<li>mp4 to avi<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.avi -vcodec mpeg4 -vtag xvid output.avi</span><br></pre></td></tr></table></figure>
-<a id="more"></a></li>
-<li>webm to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.webm -vcodec libx264 -crf 20 -acodec aac -strict experimental output.mp4</span><br><span class="line">(-crf 参数的取值范围为 0~51，其中 0 为无损模式，数值越大，画质越差，生成的文件越小)</span><br></pre></td></tr></table></figure></li>
-<li>mts to mp4<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.m2ts -c:v copy -c:a aac -strict experimental -b:a 128k output.mp4</span><br></pre></td></tr></table></figure></li>
-<li>音频淡入淡出效果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -y -i input.mp3 -af &quot;afade&#x3D;t&#x3D;in:ss&#x3D;0:d&#x3D;4,afade&#x3D;t&#x3D;out:st&#x3D;30:d&#x3D;4&quot; output.mp3</span><br></pre></td></tr></table></figure></li>
-<li>视频淡入淡出效果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf &quot;fade&#x3D;in:0:d&#x3D;[持续时间]:color&#x3D;[过度颜色];fade&#x3D;out:st:d&#x3D;[持续时间]:color&#x3D;[过度颜色]&quot; output</span><br></pre></td></tr></table></figure></li>
-<li>视频截取<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -ss START -t DURATION -i INPUT -vcodec copy -acodec copy OUTPUT</span><br></pre></td></tr></table></figure></li>
-<li>视频画面裁切（去黑边）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf crop&#x3D;OW:OH:x:y output</span><br></pre></td></tr></table></figure></li>
-<li>添加水印<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input1 -i input2 -filter_complex overlay&#x3D;x:y output</span><br></pre></td></tr></table></figure></li>
-<li>delogo<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -vf delogo&#x3D;x&#x3D;0:y&#x3D;0:w&#x3D;width:h&#x3D;height:enable&#x3D;&#39;between(t,starttime,endtime)&#39; output</span><br></pre></td></tr></table></figure></li>
-<li>设置字幕标题、默认字幕流<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i INPUT -c:v copy -c:a copy -c:s copy -metadata:s:s:0 title&#x3D;中文 -metadata:s:s:0 language&#x3D;chi -disposition:s:0 default OUTPUT</span><br></pre></td></tr></table></figure></li>
-<li>批量转码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for &#x2F;R %v IN (*.avi) do ( ffmpeg -i %v -acodec aac -vcodec libx265  &quot;OUTPUT\%~nv.mkv&quot;)（cmd）</span><br><span class="line">for &#x2F;R %%v IN (*.avi) do ( ffmpeg -i %%v -acodec aac -vcodec libx265  &quot;OUTPUT\%%~nv.mkv&quot;)（script）</span><br></pre></td></tr></table></figure></li>
-</ol>
+        <p>假设我们有如下数据：</p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="right">年龄</th>
+<th align="right">拥有的汽车数量</th>
+<th align="left">是否有房子</th>
+<th align="right">子女数量</th>
+<th align="left">婚姻状况</th>
+<th align="left">是否养狗</th>
+<th align="left">是否买过船</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="right">66</td>
+<td align="right">1</td>
+<td align="left">是</td>
+<td align="right">2</td>
+<td align="left">丧偶</td>
+<td align="left">否</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">52</td>
+<td align="right">2</td>
+<td align="left">是</td>
+<td align="right">3</td>
+<td align="left">已婚</td>
+<td align="left">否</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="left">否</td>
+<td align="right">0</td>
+<td align="left">已婚</td>
+<td align="left">是</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">25</td>
+<td align="right">1</td>
+<td align="left">否</td>
+<td align="right">1</td>
+<td align="left">单身</td>
+<td align="left">否</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="left">否</td>
+<td align="right">2</td>
+<td align="left">离异</td>
+<td align="left">是</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right"><a id="more"></a></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="left"></td>
+<td align="right"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">39</td>
+<td align="right">1</td>
+<td align="left">是</td>
+<td align="right">2</td>
+<td align="left">已婚</td>
+<td align="left">是</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">26</td>
+<td align="right">1</td>
+<td align="left">否</td>
+<td align="right">2</td>
+<td align="left">单身</td>
+<td align="left">否</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right">40</td>
+<td align="right">3</td>
+<td align="left">是</td>
+<td align="right">1</td>
+<td align="left">已婚</td>
+<td align="left">是</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right">53</td>
+<td align="right">2</td>
+<td align="left">是</td>
+<td align="right">2</td>
+<td align="left">离异</td>
+<td align="left">否</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="right">64</td>
+<td align="right">2</td>
+<td align="left">是</td>
+<td align="right">3</td>
+<td align="left">离异</td>
+<td align="left">否</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right">58</td>
+<td align="right">2</td>
+<td align="left">是</td>
+<td align="right">2</td>
+<td align="left">已婚</td>
+<td align="left">是</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="right">33</td>
+<td align="right">1</td>
+<td align="left">否</td>
+<td align="right">1</td>
+<td align="left">单身</td>
+<td align="left">否</td>
+<td align="left">否</td>
+</tr>
+</tbody></table>
+<p>我们的目的是根据上面船只的购买记录以及对买船不感兴趣的顾客记录，来预测某个记录是否买船。</p>
+<p>对数据观察一段时间后，我们可以发现如下规律：“如果果顾客年龄大于<br>45 岁，并且子女少于 3 个或没有离婚，那么他就想要买船。” 对于表中的数据，该规律完全正确。但我们的目的并不是对这个数据集进行预测，而是想知道新顾客是否可能会买船，因次在训练集上实现 100% 的精度对此完全没有帮助。</p>
+<p>判断一个算法在新数据上表现好坏的唯一度量，就是在测试集上的评估。构建一个对于现信息量过于复杂的模型，就像上面所述的规律一样，被称为过拟合（overfitting）。过拟合的模型过分关注训练集的细节，在训练集上表现很好但并不能很好地解释新数据。如果一个模型能够对没见过的数据做出准确预测，我们就说它能够从训练集泛化（generalize）到测试集。</p>
+<p>与上述相反，如果我们的模型过于简单（“有房子的人都买船”），模型无法提取出数据中的大部分信息以致在训练集上的表现就很差，这就被称为欠拟合（underfitting）。</p>
+<p>模型的复杂度越高，在训练集上的预测结果越好。但是如果模型过于复杂则泛化能力会变得越来越差。总之，我们的目的是在过拟合和欠拟合中找到一个平衡点，来使模型的泛化性能达到最好，这是我们理想的模型。</p>
 
     </div>
 
@@ -239,7 +378,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://absinthes2049.github.io/9ed508cc/" title="常用的 FFmpeg 命令">https://absinthes2049.github.io/9ed508cc/</a>
+    <a href="https://absinthes2049.github.io/ea5305b3/" title="泛化，过拟合和欠拟合">https://absinthes2049.github.io/ea5305b3/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -250,7 +389,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/FFmpeg/" rel="tag"># FFmpeg</a>
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
           </div>
 
         
@@ -259,13 +398,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/b4cd6816/" rel="prev" title="Python数据结构与算法补全系列(三)--搜索和排序">
-      <i class="fa fa-chevron-left"></i> Python数据结构与算法补全系列(三)--搜索和排序
+    <a href="/9ed508cc/" rel="prev" title="常用的 FFmpeg 命令">
+      <i class="fa fa-chevron-left"></i> 常用的 FFmpeg 命令
     </a></div>
-      <div class="post-nav-item">
-    <a href="/ea5305b3/" rel="next" title="泛化，过拟合和欠拟合">
-      泛化，过拟合和欠拟合 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -458,7 +594,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'Absinthes2049.github.io',
       owner       : 'Absinthes2049',
       admin       : ['Absinthes2049'],
-      id          : 'b21cd603288d30bdc1e59ff531f59857',
+      id          : '9cab3868de1608cd1668e718702617a2',
         language: 'zh-CN',
       distractionFreeMode: true
     });
