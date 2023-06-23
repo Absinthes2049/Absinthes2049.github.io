@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="图的术语和定义顶点顶点又称节点，是图的基础部分。顶点的名字被称为“键”。顶点也可以带有附加信息，我称作“有效载荷”。 边边是图的另一个基础部分。两个顶点通过一条边相连，表示它们之间存在关系。边既可以是单向的，也可以是双向的。如果图中的所有边都是单向的，我们称之为有向图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据结构与算法补全系列(五)--图">
+<meta property="og:url" content="https://absinthes2049.github.io/7c1ea0e4/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="图的术语和定义顶点顶点又称节点，是图的基础部分。顶点的名字被称为“键”。顶点也可以带有附加信息，我称作“有效载荷”。 边边是图的另一个基础部分。两个顶点通过一条边相连，表示它们之间存在关系。边既可以是单向的，也可以是双向的。如果图中的所有边都是单向的，我们称之为有向图。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-25T02:07:01.000Z">
+<meta property="article:modified_time" content="2021-08-31T01:27:46.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://absinthes2049.github.io/7c1ea0e4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python数据结构与算法补全系列(五)--图 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/7c1ea0e4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python数据结构与算法补全系列(五)--图
+        </h1>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-25 10:07:01" itemprop="dateCreated datePublished" datetime="2021-03-25T10:07:01+08:00">2021-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-31 09:27:46" itemprop="dateModified" datetime="2021-08-31T09:27:46+08:00">2021-08-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index"><span itemprop="name">Data Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="图的术语和定义"><a href="#图的术语和定义" class="headerlink" title="图的术语和定义"></a>图的术语和定义</h3><h4 id="顶点"><a href="#顶点" class="headerlink" title="顶点"></a>顶点</h4><p>顶点又称节点，是图的基础部分。顶点的名字被称为“键”。顶点也可以带有附加信息，我称作“有效载荷”。</p>
+<h4 id="边"><a href="#边" class="headerlink" title="边"></a>边</h4><p>边是图的另一个基础部分。两个顶点通过一条边相连，表示它们之间存在关系。边既可以是单向的，也可以是双向的。如果图中的所有边都是单向的，我们称之为有向图。</p>
+<a id="more"></a>
+<h4 id="权重"><a href="#权重" class="headerlink" title="权重"></a>权重</h4><p>边可以带权重，用来表示从一个顶点到另一个顶点的成本。例如在路线图中，从一个城市到另一个城市，边的权重可以表示两个城市之间的距离。 </p>
+<h4 id="图的定义"><a href="#图的定义" class="headerlink" title="图的定义"></a>图的定义</h4><p>图可以用 G 来表示，并且 $G = (V, E)$。其中，V 是一个顶点集合，E 是一个边集合。每一条边是一个二元组(v, w)，其中 $w, v \in V$ 。可以向边的二元组中再添加一个元素，用于表示权重。子图 s 是一个由边 e 和顶点 v 构成的集合，其中 $e \subset E$ 且 $v \subset V$。</p>
+<h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h4><p>路径是由边连接的顶点组成的序列。路径的正式定义为$w_1, w_2,…,w_n$, 其中对于所有的$1\leq i \leq n-1$, 有 $(w_1, w_{i+1}) \in E$。 无权重路径的长度是路径上的边数，有权重路径的长度是路径的边的权重之和。</p>
+<h4 id="环"><a href="#环" class="headerlink" title="环"></a>环</h4><p>环是有向图中的一条起点和终点为同一个顶点的路径。没有环的图被称为<strong>无环图</strong>，没有环的有向图被称为<strong>有向无环图</strong>，简称为 <strong>DAG</strong>。</p>
+<h3 id="图的数据抽象类型"><a href="#图的数据抽象类型" class="headerlink" title="图的数据抽象类型"></a>图的数据抽象类型</h3><p>有两种非常著名的图实现：邻接矩阵和邻接表。</p>
+<h4 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h4><p>实现图最简单的方式就是使用二维矩阵。在矩阵实现中，每一行和每一列都表示图中的一个顶点。第 v 行和第 w 列交叉的格子中的值表示从顶点 v 到顶点 w 的边的权重。如果两个顶点被一条边连接起来，就称它们是相邻的。</p>
+<p>邻接矩阵的优点是简单。对于小图来说，邻接矩阵可以清晰地展示哪些顶点是相连的。如果一个邻接矩阵的绝大多数单元格是空的，这种矩阵是“稀疏”的。对于存储稀疏数据来说，矩阵并不高效。</p>
+<h4 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h4><p>为了实现稀疏连接的图，更高效的方式是使用邻接表。在邻接表实现中，我们为图对象的所有顶点保存一个主列表，同时为每一个顶点对象都维护一个列表，其中记录了与它相连的顶点。</p>
+<p>在 Python 中，通过字典可以轻松地实现邻接表。创建两个类：： Graph 类存储包含所有顶点的主列表， Vertex 类表示图中的每一个顶点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Vertrx 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vertex</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        self.id = key</span><br><span class="line">        self.connected_to = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_neighbor</span><span class="params">(self, nbr, weight=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self.connected_to[nbr] = weight</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> str(self.id) + <span class="string">' conneted to: '</span> + str([x.id <span class="keyword">for</span> x <span class="keyword">in</span> self.connected_to])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_connections</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.connected_to.keys()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_id</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.id</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_weight</span><span class="params">(self, nbr)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.connected_to[nbr]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.ver_list = &#123;&#125;</span><br><span class="line">        self.num_vertices = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_vertex</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        self.num_vertices = self.num_vertices + <span class="number">1</span></span><br><span class="line">        new_vertex = Vertex(key)</span><br><span class="line">        self.ver_list[key] = new_vertex</span><br><span class="line">        <span class="keyword">return</span> new_vertex</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_vertex</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> n <span class="keyword">in</span> self.ver_list:</span><br><span class="line">            <span class="keyword">return</span> self.ver_list[n]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__contains__</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> n <span class="keyword">in</span> self.ver_list</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_edge</span><span class="params">(self, f, t, cost=<span class="number">0</span>)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> f <span class="keyword">not</span> <span class="keyword">in</span> self.ver_list:</span><br><span class="line">            nv = self.add_vertex(f)</span><br><span class="line">        <span class="keyword">if</span> t <span class="keyword">not</span> <span class="keyword">in</span> self.ver_list:</span><br><span class="line">            nv = self.add_vertex(t)</span><br><span class="line">        self.ver_list[f].add_neighbor(self.ver_list[t], cost)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_vertices</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.ver_list.keys()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> iter(self.ver_list.values())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>g = Graph()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>): </span><br><span class="line"><span class="meta">... </span>   g.addVertex(i)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.vertList</span><br><span class="line">&#123;<span class="number">0</span>: &lt;__main__.Vertex at <span class="number">0x20181075b20</span>&gt;,</span><br><span class="line"> <span class="number">1</span>: &lt;__main__.Vertex at <span class="number">0x20181075ac0</span>&gt;,</span><br><span class="line"> <span class="number">2</span>: &lt;__main__.Vertex at <span class="number">0x20181075f40</span>&gt;,</span><br><span class="line"> <span class="number">3</span>: &lt;__main__.Vertex at <span class="number">0x20181075ee0</span>&gt;,</span><br><span class="line"> <span class="number">4</span>: &lt;__main__.Vertex at <span class="number">0x20181075df0</span>&gt;,</span><br><span class="line"> <span class="number">5</span>: &lt;__main__.Vertex at <span class="number">0x20181075e80</span>&gt;&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">0</span>, <span class="number">5</span>, <span class="number">2</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">4</span>, <span class="number">0</span>, <span class="number">1</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">5</span>, <span class="number">4</span>, <span class="number">8</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g.addEdge(<span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> v <span class="keyword">in</span> g: </span><br><span class="line"><span class="meta">... </span>   <span class="keyword">for</span> w <span class="keyword">in</span> v.getConnections(): </span><br><span class="line"><span class="meta">... </span>       print(<span class="string">f'(<span class="subst">&#123;v.get_id()&#125;</span> ,<span class="subst">&#123;w.get_id()&#125;</span>)'</span>)</span><br><span class="line">...</span><br><span class="line">(<span class="number">0</span> ,<span class="number">1</span>)</span><br><span class="line">(<span class="number">0</span> ,<span class="number">5</span>)</span><br><span class="line">(<span class="number">1</span> ,<span class="number">2</span>)</span><br><span class="line">(<span class="number">2</span> ,<span class="number">3</span>)</span><br><span class="line">(<span class="number">3</span> ,<span class="number">4</span>)</span><br><span class="line">(<span class="number">3</span> ,<span class="number">5</span>)</span><br><span class="line">(<span class="number">4</span> ,<span class="number">0</span>)</span><br><span class="line">(<span class="number">5</span> ,<span class="number">4</span>)</span><br><span class="line">(<span class="number">5</span> ,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="宽度优先搜索"><a href="#宽度优先搜索" class="headerlink" title="宽度优先搜索"></a>宽度优先搜索</h3><p>考虑这样一个任务：将单词 FOOL 转换成 SAGE。在解决词梯问题时，必须每次只替换一个字母，并且每一步的结果都必须是一个单词，而不能是不存在的词。假设单词表中有 n 个单词，将一个单词与列表中其他所有单词进行比较，时间复杂度为 $O(n^2)$。用图算法来解决这个问题，大致步骤为：</p>
+<ol>
+<li>用图表示单词之间的关系</li>
+<li>用宽度优先搜索的图算法找到从起始单词到结束单词的最短路径</li>
+</ol>
+<p>单词集合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">FOOL</span><br><span class="line">POOL</span><br><span class="line">FOIL</span><br><span class="line">FOUL</span><br><span class="line">COOL</span><br><span class="line">POLL</span><br><span class="line">FAIL</span><br><span class="line">POLE</span><br><span class="line">PALL</span><br><span class="line">POPE</span><br><span class="line">PALE</span><br><span class="line">PAGE</span><br><span class="line">SALE</span><br><span class="line">SAGE</span><br></pre></td></tr></table></figure>
+
+<p>假设有数目巨大的桶，每个个桶上都标有一个长度为 4 的单词，但是某一个字母被下划线代替，如 POP_。当处理列表中的每一个单词时，将它与桶上的标签进行比较。使用下划线作为通配符，我们将 POPE 和 POPS 放入同一个桶中。同一个桶中的单词一定是相连的。 </p>
+<p>在 Python 中，可以通过字典来实现上述方法。字典的键就是桶上的标签，值就是对应的单词列表。一旦构建好字典，就能利用它来创建图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pythonds.graphs <span class="keyword">import</span> Graph</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_graph</span><span class="params">(word_file)</span>:</span></span><br><span class="line">    d = &#123;&#125;</span><br><span class="line">    g = Graph()</span><br><span class="line">    wfile = open(word_file,<span class="string">'r'</span>)</span><br><span class="line">    <span class="comment"># 创建词桶  </span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> wfile:</span><br><span class="line">        word = line[:<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(word)):</span><br><span class="line">            bucket = word[:i] + <span class="string">'_'</span> + word[i+<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">if</span> bucket <span class="keyword">in</span> d:</span><br><span class="line">                d[bucket].append(word)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                d[bucket] = [word]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 为同一个桶中的单词添加顶点和边 </span></span><br><span class="line">    <span class="keyword">for</span> bucket <span class="keyword">in</span> d.keys():</span><br><span class="line">        <span class="keyword">for</span> word1 <span class="keyword">in</span> d[bucket]:</span><br><span class="line">            <span class="keyword">for</span> word2 <span class="keyword">in</span> d[bucket]:</span><br><span class="line">                <span class="keyword">if</span> word1 != word2:</span><br><span class="line">                    g.addEdge(word1, word2)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> g</span><br></pre></td></tr></table></figure>
+
+<p><strong>宽度优先搜索(BFS)</strong>是最简单的图搜索算法之一，也是许多其他重要图算法的原型。 给定图 G 和起点 s，BFS 通过边来访问在 G 中与 s 之间存在路径的顶点。BFS 的一个重要特性是，它会在访问完所有与 s 相距为 k 的顶点之后再去访问与 s 相距为 k+1 的顶点。</p>
+<p>为了记录进度，BFS 会将顶点标记成白色、灰色或黑色。在构建时，所有顶点都被初始化成白色。白色代表该顶点没有被访问过。当顶点第一次被访问时，它就会被标记为灰色；当 BFS完成对该顶点的访问之后，它就会被标记为黑色。这意味着一旦顶点变为黑色，就没有白色顶点与之相连。灰色顶点仍然可能与一些白色顶点相连，这意味着还有额外的顶点可以访问。</p>
+<p>BFS 在访问一个新的顶点时，如果是白色，说明顶点没有被访问过，接下来执行以下四步：</p>
+<ol>
+<li>将新的未访问顶点 nbr 标记成灰色</li>
+<li>将 nbr 的 predecessor 设置成当前顶点 currentVert</li>
+<li>将 nbr 的 distance 设置成到 currentVert 的 distance 加 1</li>
+<li>将 nbr 添加到队列的尾部</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 宽度优先搜索</span></span><br><span class="line"><span class="keyword">from</span> pythonds.graphs <span class="keyword">import</span> Graph, Vertex</span><br><span class="line"><span class="keyword">from</span> pythonds.basic <span class="keyword">import</span> Queue</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(g, start)</span>:</span></span><br><span class="line">    start.setDistance(<span class="number">0</span>)</span><br><span class="line">    start.setPred(<span class="literal">None</span>)</span><br><span class="line">    vert_queue = Queue()</span><br><span class="line">    vert_queue.enqueue(start)</span><br><span class="line">    <span class="keyword">while</span> (vert_queue.size() &gt; <span class="number">0</span>):</span><br><span class="line">        current_vert = vert_queue.dequeue()</span><br><span class="line">        <span class="keyword">for</span> nbr <span class="keyword">in</span> current_vert.getConnections():</span><br><span class="line">            <span class="keyword">if</span> (nbr.getColor() == <span class="string">'white'</span>):</span><br><span class="line">                nbr.setColor(<span class="string">'gray'</span>)</span><br><span class="line">                nbr.setDistance(current_vert.getDidtance() + <span class="number">1</span>)</span><br><span class="line">                nbr.set_pred(current_vert)</span><br><span class="line">                vert_queue.enqueue(nbr)</span><br><span class="line">        current_vert.setColor(<span class="string">'black'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">traverse</span><span class="params">(y)</span>:</span></span><br><span class="line">    x = y</span><br><span class="line">    <span class="keyword">while</span> (x.getPred()):</span><br><span class="line">        print(x.getId())</span><br><span class="line">        x = x.getPred()</span><br><span class="line">    print(x.getId())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>g = build_graph(<span class="string">'word_file.txt'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>bfs(g, g.getVertex(<span class="string">'FOOL'</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>traverse(g.getVertex(<span class="string">'SAGE'</span>))</span><br><span class="line">SAGE</span><br><span class="line">SALE</span><br><span class="line">PALE</span><br><span class="line">PALL</span><br><span class="line">POLL</span><br><span class="line">POOL</span><br><span class="line">FOOL</span><br></pre></td></tr></table></figure>
+<h3 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h3><p>马踏棋盘问题（也成为骑士周游问题）：将吗随机放在国际象棋的 8*8 的棋盘中的某个格子里，马按照走棋规则进行移动。要求每个方格只进入一次，走遍 64 个方格。</p>
+<p>图搜索算法是解决马踏棋盘问题的算法中最易理解也最易编程的一种。通过两个步骤解决这个问题：</p>
+<ol>
+<li>用图表示骑士在棋盘上的合理走法</li>
+<li>使用图算法找到一条长度为 $rows \times columns - 1$, 满足图中的每一个顶点都只被访问一次。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pythonds.graphs <span class="keyword">import</span> Graph</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kinghtGraph</span><span class="params">(bd_size)</span>:</span></span><br><span class="line">    ktGraph = Graph()</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(bd_size):</span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> range(bd_size):</span><br><span class="line">            node_id = pos_to_node_id(row, col, bd_size)</span><br><span class="line">            new_positions = get_legal_moves(row, col, bd_size)</span><br><span class="line">            <span class="keyword">for</span> e <span class="keyword">in</span> new_positions:</span><br><span class="line">                nid = pos_to_node_id(e[<span class="number">0</span>], e[<span class="number">1</span>], bd_size)</span><br><span class="line">                ktGraph.addEdge(node_id, nid)</span><br><span class="line">    <span class="keyword">return</span> ktGraph</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_legal_moves</span><span class="params">(x, y ,bd_size)</span>:</span></span><br><span class="line">    new_moves = []</span><br><span class="line">    move_off_sets = [(<span class="number">-1</span>, <span class="number">-2</span>), (<span class="number">-1</span>, <span class="number">2</span>), (<span class="number">-2</span>, <span class="number">-1</span>), (<span class="number">-2</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">-2</span>), (<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">-1</span>), (<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> move_off_sets:</span><br><span class="line">        new_x = x + i[<span class="number">0</span>]</span><br><span class="line">        new_y = y + i[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> legal_coord(new_x, bd_size) <span class="keyword">and</span> legal_coord(new_y, bd_size):</span><br><span class="line">            new_moves.append((new_x, new_y))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> new_moves</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">legal_coord</span><span class="params">(x, bd_size)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x &gt;= <span class="number">0</span> <span class="keyword">and</span> x &lt; bd_size:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pos_to_node_id</span><span class="params">(row, col, bd_size)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> row * bd_size + col</span><br></pre></td></tr></table></figure>
+
+<p>用来解决骑士周游问题的搜索算法是<strong>深度优先搜索（DFS）</strong>。DFS 通过尽可能深地探索分支来构建树。 这个例子中，DFS 的目的是找到 63 条边构成的路径，当 DFS 遇到死路时，它会回退到树种倒数第 2 深的顶点，以继续移动。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pythonds.graphs <span class="keyword">import</span> Graph, Vertex</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">knightTour</span><span class="params">(n,path,u,limit)</span>:</span></span><br><span class="line">        u.setColor(<span class="string">'gray'</span>)</span><br><span class="line">        path.append(u)</span><br><span class="line">        <span class="keyword">if</span> n &lt; limit:</span><br><span class="line">            nbrList = list(u.getConnections())</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            done = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; len(nbrList) <span class="keyword">and</span> <span class="keyword">not</span> done:</span><br><span class="line">                <span class="keyword">if</span> nbrList[i].getColor() == <span class="string">'white'</span>:</span><br><span class="line">                    done = knightTour(n+<span class="number">1</span>, path, nbrList[i], limit)</span><br><span class="line">                i = i + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> done:  <span class="comment"># 准备回溯</span></span><br><span class="line">                path.pop()</span><br><span class="line">                u.setColor(<span class="string">'white'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            done = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> done</span><br></pre></td></tr></table></figure>
+
+<p>knightTour 递归函数接受 4 个参数： n 是搜索树的当前深度； path 是到当前为止访问过的顶点列表； u 是希望在图中访问的顶点； limit 是路径上的顶点总数。它首先检查基本情况。如果有一条包含 64 个顶点的路径，就从 knightTour 返回 True ，以表示找到了一次成功的周游。如果路径不够长，则通过选择一个新的访问顶点并对其递归调用 knightTour 来进行更深一层的探索。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">&gt;&gt;&gt; kg &#x3D; kinghtGraph(8)</span><br><span class="line">&gt;&gt;&gt; path &#x3D; []</span><br><span class="line">&gt;&gt;&gt; v_5 &#x3D; kg.getVertex(4)</span><br><span class="line">&gt;&gt;&gt; knightTour(0, path, v_5, 63)</span><br></pre></td></tr></table></figure>
+<p>性能一般的计算机，可能要等半个小时才能得到结果。用如下代码加速算法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">order_by_avail</span><span class="params">(n)</span>:</span></span><br><span class="line">    res_list = []</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> n.getConnections():</span><br><span class="line">        <span class="keyword">if</span> v.getColor() == <span class="string">'white'</span>:</span><br><span class="line">            c = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> w <span class="keyword">in</span> v.getConnections():</span><br><span class="line">                <span class="keyword">if</span> w.getColor() == <span class="string">'white'</span>:</span><br><span class="line">                    c = c + <span class="number">1</span></span><br><span class="line">            res_list.append((c, v))</span><br><span class="line">    res_list.sort(key = <span class="keyword">lambda</span> x:x[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> [y[<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> res_list]</span><br></pre></td></tr></table></figure>
+<p>用 order_by_avail(u) 替换掉 knightTour 函数中第 4 行的 u.getConnections。 这一行保证接下来要访问的顶点有最少的合理走法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; kg &#x3D; kinghtGraph(8)</span><br><span class="line">&gt;&gt;&gt; path &#x3D; []</span><br><span class="line">&gt;&gt;&gt; v_5 &#x3D; kg.getVertex(4)</span><br><span class="line">&gt;&gt;&gt; knightTour(0, path, v_5, 63)</span><br><span class="line">&gt;&gt;&gt; for i in path:</span><br><span class="line">...     print(i.getId())</span><br><span class="line">...</span><br><span class="line">4</span><br><span class="line">14</span><br><span class="line">31</span><br><span class="line">46</span><br><span class="line">63</span><br><span class="line">53</span><br><span class="line">47</span><br><span class="line">62</span><br><span class="line">52</span><br><span class="line">58</span><br><span class="line">...</span><br><span class="line">42</span><br><span class="line">27</span><br><span class="line">17</span><br><span class="line">0</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+
+<p>选择合理走法最多的顶点作为下一个访问顶点的问题在于，它会使骑士在周游的前期就访问位于棋盘中间的格子。当这种情况发生时，骑士很容易被困在棋盘的一边，而无法到达另一边的那些没访问过的格子。首先访问合理走法最少的顶点，则可使骑士优先访问棋盘边缘的格子。这样做保证了骑士能够尽早访问难以到达的角落，并且在需要的时候通过中间的格子跨越到棋盘的另一边。</p>
+<p>我们称利用这类知识来加速算法为启发式技术。人类每天都在使用启发式技术做决定，启发式搜索也经常被用于人工智能领域。</p>
+<p>马踏棋盘问题是深度优先搜索的一种特殊情况。通用的深度优先搜索简单一些，它的目标是尽可能深地搜索，尽可能多地连接图中的顶点，并且在需要的时候进行分支。</p>
+<p>一次深度优先搜索甚至能够创建多棵深度优先搜索树，我们称之为深度优先森林。深度优先森林还会使用 Vertex 类中的两个额外的实例变量：发现时间记录算法在第一次访问顶点时的步数，结束时间记录算法在顶点被标记为黑色时的步数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pythonds.graphs <span class="keyword">import</span> Graph</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DFSGrahp</span><span class="params">(Graph)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.time = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> a_vertex <span class="keyword">in</span> self:</span><br><span class="line">            a_vertex.setColor(<span class="string">'white'</span>)</span><br><span class="line">            a_vertex.setPred(<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">for</span> a_vertex <span class="keyword">in</span> self:</span><br><span class="line">            <span class="keyword">if</span> a_vartex.getColor() == <span class="string">'white'</span>:</span><br><span class="line">                self.dfsvisit(a_vertex)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfsvisit</span><span class="params">(self, start_vertex)</span>:</span></span><br><span class="line">        start_vertex.setColor(<span class="string">'gray'</span>)</span><br><span class="line">        self.time += <span class="number">1</span></span><br><span class="line">        start_vertex.setDiscovery(self.time)</span><br><span class="line">        <span class="keyword">for</span> next_vertex <span class="keyword">in</span> start_vertex.getConnections():</span><br><span class="line">            <span class="keyword">if</span> next_vertex.getColor() == <span class="string">'white'</span>:</span><br><span class="line">                next_vertex.setPred(next_vertex)</span><br><span class="line">                self.dfsvisit(next_vertex)</span><br><span class="line">        start_vertex.setColor(<span class="string">'black'</span>)</span><br><span class="line">        self.time += <span class="number">1</span></span><br><span class="line">        start_vertex.setFinish(self.time)</span><br></pre></td></tr></table></figure>
+
+<p>每个顶点的发现时间和结束时间都体现了括号特性，这意味着深度优先搜索树种的任一子节点都比该节点更晚的发现时间和更早的结束时间。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/7c1ea0e4/" title="Python数据结构与算法补全系列(五)--图">https://absinthes2049.github.io/7c1ea0e4/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3dd4cabe/" rel="prev" title="Python数据结构与算法补全系列(四)--树">
+      <i class="fa fa-chevron-left"></i> Python数据结构与算法补全系列(四)--树
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/9ed508cc/" rel="next" title="常用的 FFmpeg 命令">
+      常用的 FFmpeg 命令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#图的术语和定义"><span class="nav-number">1.</span> <span class="nav-text">图的术语和定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#顶点"><span class="nav-number">1.1.</span> <span class="nav-text">顶点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#边"><span class="nav-number">1.2.</span> <span class="nav-text">边</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#权重"><span class="nav-number">1.3.</span> <span class="nav-text">权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图的定义"><span class="nav-number">1.4.</span> <span class="nav-text">图的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路径"><span class="nav-number">1.5.</span> <span class="nav-text">路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环"><span class="nav-number">1.6.</span> <span class="nav-text">环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图的数据抽象类型"><span class="nav-number">2.</span> <span class="nav-text">图的数据抽象类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接矩阵"><span class="nav-number">2.1.</span> <span class="nav-text">邻接矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接表"><span class="nav-number">2.2.</span> <span class="nav-text">邻接表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#宽度优先搜索"><span class="nav-number">3.</span> <span class="nav-text">宽度优先搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先搜索"><span class="nav-number">4.</span> <span class="nav-text">深度优先搜索</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : 'e4cef480885b23500c3231a91d135746',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="WSL2 Ubuntu 20.04 并不是很稳定，又或者由于其它的原因需要重置子系统，已经安装配置好的应用又要重新安装配置，已经踩过的坑又要重新踩一遍。所以有了这篇作为总结和备忘，以后再重新配置直接抄作业就行，不用再重新 debug 已经被 debug 多次的问题。不过新系统每个应用都要重新配置毕竟不是长久之道，早点升级机器配置安装 CDH 之类的集成环境才是正解（现在的机器内存就这么几个 G 你">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 WSL2 Ubuntu 20.04 中配置数据库和大数据组件">
+<meta property="og:url" content="https://absinthes2049.github.io/f6567ea2/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="WSL2 Ubuntu 20.04 并不是很稳定，又或者由于其它的原因需要重置子系统，已经安装配置好的应用又要重新安装配置，已经踩过的坑又要重新踩一遍。所以有了这篇作为总结和备忘，以后再重新配置直接抄作业就行，不用再重新 debug 已经被 debug 多次的问题。不过新系统每个应用都要重新配置毕竟不是长久之道，早点升级机器配置安装 CDH 之类的集成环境才是正解（现在的机器内存就这么几个 G 你">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-17T06:37:00.000Z">
+<meta property="article:modified_time" content="2022-05-02T09:16:42.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta property="article:tag" content="Big Data">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://absinthes2049.github.io/f6567ea2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>在 WSL2 Ubuntu 20.04 中配置数据库和大数据组件 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/f6567ea2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 WSL2 Ubuntu 20.04 中配置数据库和大数据组件
+        </h1>
+
+        <div class="post-meta">
+        
+          
+              <i class="fa fa-thumb-tack"></i>
+              <font color="RED">置顶</font>
+              <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-17 14:37:00" itemprop="dateCreated datePublished" datetime="2022-04-17T14:37:00+08:00">2022-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-05-02 17:16:42" itemprop="dateModified" datetime="2022-05-02T17:16:42+08:00">2022-05-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>WSL2 Ubuntu 20.04 并不是很稳定，又或者由于其它的原因需要重置子系统，已经安装配置好的应用又要重新安装配置，已经踩过的坑又要重新踩一遍。所以有了这篇作为总结和备忘，以后再重新配置直接抄作业就行，不用再重新 debug 已经被 debug 多次的问题。不过新系统每个应用都要重新配置毕竟不是长久之道，早点升级机器配置安装 CDH 之类的集成环境才是正解（现在的机器内存就这么几个 G 你还要装 CDH 它能装吗？ 装不了，没这个能力知道吧 ╮（╯＿╰）╭）。</p>
+<h2 id="WSL2-Ubuntu-重置"><a href="#WSL2-Ubuntu-重置" class="headerlink" title="WSL2 Ubuntu 重置"></a>WSL2 Ubuntu 重置</h2><p>Windows - 设置 - 应用 - 应用和功能 - 应用列表 - Ubuntu on Windows - 高级设置 - 重置</p>
+<a id="more"></a>
+<h2 id="WSL2-Ubuntu-移动到-D-盘"><a href="#WSL2-Ubuntu-移动到-D-盘" class="headerlink" title="WSL2 Ubuntu 移动到 D 盘"></a>WSL2 Ubuntu 移动到 D 盘</h2><p>下载 <a href="https://github.com/DDoSolitary/LxRunOffline" target="_blank" rel="noopener">LxRunOffline</a><br>查看子系统列表 <code>LxRunOffline l</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ubuntu</span><br></pre></td></tr></table></figure>
+<p>将 <code>Ubuntu</code> 从默认位置移动到 <code>D:\Virtual Machines\WSL\Ubuntu</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LxRunOffline m -n Ubuntu -d &quot;D:\Virtual Machines\WSL\Ubuntu&quot;</span><br></pre></td></tr></table></figure>
+<p>查看子系统安装位置验证是否迁移成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LxRunOffline di -n Ubuntu</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置默认-WSL2-子系统发行版"><a href="#设置默认-WSL2-子系统发行版" class="headerlink" title="设置默认 WSL2 子系统发行版"></a>设置默认 WSL2 子系统发行版</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --setdefault Ubuntu</span><br></pre></td></tr></table></figure>
+
+<h2 id="apt-换源、更新、手动安装-ca-certificates"><a href="#apt-换源、更新、手动安装-ca-certificates" class="headerlink" title="apt 换源、更新、手动安装 ca-certificates"></a>apt 换源、更新、手动安装 ca-certificates</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;apt&#x2F;sources.list</span><br><span class="line">sudo apt update &amp;&amp; sudo apt upgrade</span><br><span class="line">cd &#x2F;tmp</span><br><span class="line">wget http:&#x2F;&#x2F;ports.ubuntu.com&#x2F;pool&#x2F;main&#x2F;c&#x2F;ca-certificates&#x2F;ca-certificates_20210119~20.04.2_all.deb</span><br><span class="line">sudo dpkg -i .&#x2F;ca-certificates_20210119~20.04.2_all.deb</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line">cat ~&#x2F;.ssh&#x2F;id_rsa.pub &gt;&gt; ~&#x2F;.ssh&#x2F;authorized_keys</span><br></pre></td></tr></table></figure>
+<h3 id="run-nologin-导致的-SSH-启动失败问题"><a href="#run-nologin-导致的-SSH-启动失败问题" class="headerlink" title="/run/nologin 导致的 SSH 启动失败问题"></a>/run/nologin 导致的 SSH 启动失败问题</h3><p><code>sudo vim /etc/pam.d/sshd</code> 注释掉 <code>account    required     pam_nologin.so</code></p>
+<h2 id="配置-systemd"><a href="#配置-systemd" class="headerlink" title="配置 systemd"></a>配置 systemd</h2><p>安装 daemonize : <code>sudo apt install daemonize</code></p>
+<p>安装 systemd：<a href="https://github.com/DamionGans/ubuntu-wsl2-systemd-script" target="_blank" rel="noopener">ubuntu-wsl2-systemd-script</a></p>
+<h3 id="解决-nsenter-cannot-open-proc-10867-ns-time-No-such-file-or-directory-报错"><a href="#解决-nsenter-cannot-open-proc-10867-ns-time-No-such-file-or-directory-报错" class="headerlink" title="解决 nsenter: cannot open /proc/10867/ns/time: No such file or directory 报错"></a>解决 <code>nsenter: cannot open /proc/10867/ns/time: No such file or directory</code> 报错</h3><p><a href="https://github.com/DamionGans/ubuntu-wsl2-systemd-script/issues/36" target="_blank" rel="noopener">nsenter: cannot open /proc/320/ns/time: No such file or directory</a></p>
+<p>测试是否安装成功：<code>systemctl</code></p>
+<h2 id="子系统内屏蔽-Windows-环境变量"><a href="#子系统内屏蔽-Windows-环境变量" class="headerlink" title="子系统内屏蔽 Windows 环境变量"></a>子系统内屏蔽 Windows 环境变量</h2><p>新建 <code>/etc/wsl.conf</code> 文件并添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[interop]</span><br><span class="line">appendWindowsPath &#x3D; false</span><br></pre></td></tr></table></figure>
+<p>上述操作后无法执行 <code>code .</code> 来打开主系统的 VS Code, 所以需要把主系统 VS Code 的安装路径添加到子系统环境变量中:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## VS Code</span><br><span class="line">PATH&#x3D;$PATH:&#39;&#x2F;mnt&#x2F;c&#x2F;Program Files&#x2F;Microsoft VS Code&#x2F;bin&#39;</span><br></pre></td></tr></table></figure>
+<p>重启子系统</p>
+<h2 id="Python-软连接、PIP-安装、pip-换源"><a href="#Python-软连接、PIP-安装、pip-换源" class="headerlink" title="Python 软连接、PIP 安装、pip 换源"></a>Python 软连接、PIP 安装、pip 换源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s &#x2F;usr&#x2F;bin&#x2F;python3.8 &#x2F;usr&#x2F;bin&#x2F;python</span><br><span class="line">sudo apt install python3-pip -y</span><br><span class="line">pip config set global.index-url https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conda-环境"><a href="#Conda-环境" class="headerlink" title="Conda 环境"></a>Conda 环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;repo.anaconda.com&#x2F;miniconda&#x2F;Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line">bash Miniconda3-latest-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="Jupyter-环境"><a href="#Jupyter-环境" class="headerlink" title="Jupyter 环境"></a>Jupyter 环境</h2><p>PIP 安装 Jupyter：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyterlab jupyterlab-language-pack-zh-CN jupyterlab-execute-time</span><br></pre></td></tr></table></figure>
+<p>Jupyter 环境变量：<code>export PATH=$PATH:~/.local/bin</code><br>Jupyter 笔记本设置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"codeCellConfig"</span>:</span><br><span class="line">    &#123;<span class="attr">"autoClosingBrackets"</span>: <span class="literal">false</span>,&#125;,</span><br><span class="line">    <span class="attr">"recordTiming"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Java-环境"><a href="#Java-环境" class="headerlink" title="Java 环境"></a>Java 环境</h2><p>安装 Java 8 ：<code>sudo apt-get install openjdk-8-jdk</code><br>Java 环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## JAVA</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-8-openjdk-amd64</span><br><span class="line">export JRE_HOME&#x3D;$&#123;JAVA_HOME&#125;&#x2F;jre</span><br><span class="line">export CLASSPATH&#x3D;.:$&#123;JAVA_HOME&#125;&#x2F;lib:$&#123;JRE_HOME&#125;&#x2F;lib</span><br><span class="line">export PATH&#x3D;$&#123;JAVA_HOME&#125;&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><a href="/21f81262/" title="在 WSL2 Ubuntu 20.04 上安装 MySQL 并配置账户">在 WSL2 Ubuntu 20.04 上安装 MySQL 并配置账户</a>
+
+<h2 id="SQL-Server"><a href="#SQL-Server" class="headerlink" title="SQL Server"></a>SQL Server</h2><p>在 Windows 中配置端口 1433 入站规则：<a href="https://docs.microsoft.com/zh-cn/sql/database-engine/configure-windows/configure-a-windows-firewall-for-database-engine-access?view=sql-server-ver15#to-open-a-port-in-the-windows-firewall-for-tcp-access" target="_blank" rel="noopener">打开 Windows 防火墙的端口以进行 TCP 访问</a></p>
+<a href="/f02a8e7e/" title="在 WSL2 Ubuntu 20.04 上安装 SQL Server 并用 Sqoop 将数据导入 HDFS">在 WSL2 Ubuntu 20.04 上安装 SQL Server 并用 Sqoop 将数据导入 HDFS</a>
+
+<h2 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h2><a href="/b2d32093/" title="在 WSL2 Ubuntu 20.04 上安装 Hadoop 并写一个 WordCount">在 WSL2 Ubuntu 20.04 上安装 Hadoop 并写一个 WordCount</a>
+
+<h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p><a href="https://www.tutorialspoint.com/apache_spark/apache_spark_installation.htm" target="_blank" rel="noopener">Apache Spark - Installation</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## SPARK</span><br><span class="line">export SPARK_HOME&#x3D;&#x2F;home&#x2F;herman&#x2F;apps&#x2F;spark-3.2.1</span><br><span class="line">export PATH&#x3D;$PATH:$SPARK_HOME&#x2F;bin</span><br><span class="line">export PYSPARK_DRIVER_PYTHON&#x3D;jupyter</span><br><span class="line">export PYSPARK_PYTHON&#x3D;python</span><br><span class="line">export PYSPARK_DRIVER_PYTHON_OPTS&#x3D;&#39;lab --no-browser&#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><a href="/21fed225/" title="在 WSL2 Ubuntu 20.04 上安装 Hive">在 WSL2 Ubuntu 20.04 上安装 Hive</a>
+
+<h2 id="Presto"><a href="#Presto" class="headerlink" title="Presto"></a>Presto</h2><a href="/f51b91f3/" title="在 WSL2 Ubuntu 20.04 上安装 Presto">在 WSL2 Ubuntu 20.04 上安装 Presto</a>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/f6567ea2/" title="在 WSL2 Ubuntu 20.04 中配置数据库和大数据组件">https://absinthes2049.github.io/f6567ea2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Big-Data/" rel="tag"># Big Data</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/f51b91f3/" rel="prev" title="在 WSL2 Ubuntu 20.04 上安装 Presto">
+      <i class="fa fa-chevron-left"></i> 在 WSL2 Ubuntu 20.04 上安装 Presto
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/3661d922/" rel="next" title="PC端Fiddler监听手机流量">
+      PC端Fiddler监听手机流量 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WSL2-Ubuntu-重置"><span class="nav-number">1.</span> <span class="nav-text">WSL2 Ubuntu 重置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WSL2-Ubuntu-移动到-D-盘"><span class="nav-number">2.</span> <span class="nav-text">WSL2 Ubuntu 移动到 D 盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置默认-WSL2-子系统发行版"><span class="nav-number">3.</span> <span class="nav-text">设置默认 WSL2 子系统发行版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apt-换源、更新、手动安装-ca-certificates"><span class="nav-number">4.</span> <span class="nav-text">apt 换源、更新、手动安装 ca-certificates</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH"><span class="nav-number">5.</span> <span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#run-nologin-导致的-SSH-启动失败问题"><span class="nav-number">5.1.</span> <span class="nav-text">&#x2F;run&#x2F;nologin 导致的 SSH 启动失败问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-systemd"><span class="nav-number">6.</span> <span class="nav-text">配置 systemd</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决-nsenter-cannot-open-proc-10867-ns-time-No-such-file-or-directory-报错"><span class="nav-number">6.1.</span> <span class="nav-text">解决 nsenter: cannot open &#x2F;proc&#x2F;10867&#x2F;ns&#x2F;time: No such file or directory 报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子系统内屏蔽-Windows-环境变量"><span class="nav-number">7.</span> <span class="nav-text">子系统内屏蔽 Windows 环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-软连接、PIP-安装、pip-换源"><span class="nav-number">8.</span> <span class="nav-text">Python 软连接、PIP 安装、pip 换源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda-环境"><span class="nav-number">9.</span> <span class="nav-text">Conda 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jupyter-环境"><span class="nav-number">10.</span> <span class="nav-text">Jupyter 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-环境"><span class="nav-number">11.</span> <span class="nav-text">Java 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL"><span class="nav-number">12.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-Server"><span class="nav-number">13.</span> <span class="nav-text">SQL Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop"><span class="nav-number">14.</span> <span class="nav-text">Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark"><span class="nav-number">15.</span> <span class="nav-text">Spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive"><span class="nav-number">16.</span> <span class="nav-text">Hive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Presto"><span class="nav-number">17.</span> <span class="nav-text">Presto</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : '2681ff8aa27e471e50de066bb6c11f4b',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

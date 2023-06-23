@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="10 年前的电脑可以装最新的 Windows 11，10 年前的安卓机却装不聊最新的 Android 发行版。虽然安卓开放，但上游硬件厂商提供的驱动和文档确大都闭源甚至收费的。再加上对各种商业因素的考量，一款安卓手机发布 2 到 3 年后，厂商就愉快地结束升级支持并转身投入到新机器的系统适配和维护中去了。这台用着英伟达 SoC 的手机在服务周期内虽然从 MIUI5 升级到 MIUI9 ，但 And">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次纠结的小米 3 TD 内核编译经历">
+<meta property="og:url" content="https://absinthes2049.github.io/37cb43d0/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="10 年前的电脑可以装最新的 Windows 11，10 年前的安卓机却装不聊最新的 Android 发行版。虽然安卓开放，但上游硬件厂商提供的驱动和文档确大都闭源甚至收费的。再加上对各种商业因素的考量，一款安卓手机发布 2 到 3 年后，厂商就愉快地结束升级支持并转身投入到新机器的系统适配和维护中去了。这台用着英伟达 SoC 的手机在服务周期内虽然从 MIUI5 升级到 MIUI9 ，但 And">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://absinthes2049.github.io/37cb43d0/kernal_version.png">
+<meta property="article:published_time" content="2022-02-27T10:15:00.000Z">
+<meta property="article:modified_time" content="2022-04-17T06:47:18.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://absinthes2049.github.io/37cb43d0/kernal_version.png">
+
+<link rel="canonical" href="https://absinthes2049.github.io/37cb43d0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>一次纠结的小米 3 TD 内核编译经历 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/37cb43d0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一次纠结的小米 3 TD 内核编译经历
+        </h1>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-27 18:15:00" itemprop="dateCreated datePublished" datetime="2022-02-27T18:15:00+08:00">2022-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-17 14:47:18" itemprop="dateModified" datetime="2022-04-17T14:47:18+08:00">2022-04-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>10 年前的电脑可以装最新的 Windows 11，10 年前的安卓机却装不聊最新的 Android 发行版。虽然安卓开放，但上游硬件厂商提供的驱动和文档确大都闭源甚至收费的。再加上对各种商业因素的考量，一款安卓手机发布 2 到 3 年后，厂商就愉快地结束升级支持并转身投入到新机器的系统适配和维护中去了。这台用着英伟达 SoC 的手机在服务周期内虽然从 MIUI5 升级到 MIUI9 ，但 Android 版本一直停留在 4.4.4，升级内容基本是换皮。被英伟达坑了的小米坑了一众相信 MIUI 的米粉。</p>
+<a id="more"></a>
+
+<p>这个机器的内核开源了后，民间的第三方 ROM 才有活跃了起来。这次试下用源码编译内核并且刷进机器上。<a href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/pisces-kk-oss" target="_blank" rel="noopener">源码</a>全部 clone 下来有 n 个多 G，Github 下载速度很慢，所有在 Gitee 上找了一个备份的<a href="https://gitee.com/Dksslq/Xiaomi_Kernel_OpenSource/tree/pisces-kk-oss/" target="_blank" rel="noopener">仓库</a>。按照<a href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/wiki/How-to-compile-kernel-standalone" target="_blank" rel="noopener">小米官方内核编译WIKI</a>下载下来还要安装一大堆开发环境包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-gtk3-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev unzip openjdk-8-jdk language-pack-zh-hans abootimg</span><br></pre></td></tr></table></figure>
+<p>在源码的<a href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/pisces-kk-oss/include/linux" target="_blank" rel="noopener">这个位置</a> 搜 gcc 发现返回这三个结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">compiler-gcc.h</span><br><span class="line">compiler-gcc3.h</span><br><span class="line">compiler-gcc4.h</span><br></pre></td></tr></table></figure>
+<p>所以要找的跨平台编译链工具的版本号大概是 4 左右。在 GNU Arm Embedded Toolchain 的<a href="https://launchpad.net/gcc-arm-embedded/+series" target="_blank" rel="noopener">官网</a>可以查到最后一个 4.9 的版本是 <a href="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update" target="_blank" rel="noopener">4.9-2015-q3-update</a>。下载下来解压并配置好环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export ARCH&#x3D;arm</span><br><span class="line">export SUBARCH&#x3D;arm</span><br><span class="line">export CROSS_COMPILE&#x3D;&#x2F;home&#x2F;user&#x2F;gcc-arm-none-eabi-4_9-2015q3&#x2F;bin&#x2F;arm-none-eabi-</span><br></pre></td></tr></table></figure>
+<p>在这个仓库里用 git log 可以看到：</p>
+<blockquote>
+<p>
+The Patch based on NVIDIA release TAG tegra-17r18-android-4.2
+
+</p><p>The kernel config file used is tegra11_pisces_user_defconfig</p>
+<p></p>
+</blockquote>
+
+<p>接下来先建一个输出文件夹，然后开始编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir out</span><br><span class="line">make O=out tegra11_pisces_user_defconfig</span><br><span class="line">make -j32 O=out</span><br></pre></td></tr></table></figure>
+<p>中间遇到错误停下来编译终止，查看报错的是 <code>/drivers/media/video/tegra/ad5823.c</code> 这里出现 <code>error: iteration 6u invokes undefined behavio</code>, 按照搜到的方法在下面的代码中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (i &#x3D; 0; i &lt;&#x3D; ARRAY_SIZE(ad5823_gpios); i++) &#123;</span><br><span class="line">    if (info-&gt;gpio[i].flag &amp;&amp; info-&gt;gpio[i].own) &#123;</span><br><span class="line">        gpio_free(info-&gt;gpio[i].gpio);</span><br><span class="line">        info-&gt;gpio[i].own &#x3D; false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把 &lt;= 改成&lt; 后就好了。改完后重新开始编译，若编译成功最后的 log 里会出现 <code>zImage is ready</code> 的字样。在 <code>./out/arch/arm/boot</code> 下面的 zImage 文件就是编译好的内核文件。</p>
+<p>现在要把 zImage 打包成 img 文件刷进手机。把官方的线刷文件的 <code>boot.img</code> 文件拿过来，然后用 abootimg 将 zImage 刷进去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abootimg -u boot.img -k zImage</span><br></pre></td></tr></table></figure>
+<p>再将处理好的 <code>boot.img</code> 文件放回到原来的刷机包里正常线刷就行了。刷机成功后打开手机查看参数可以看到内核版本的参数已经改变了：</p>
+<img src="/37cb43d0/kernal_version.png" class title="kernal_version">
+
+<p>就是不知道最后为啥加了一个 dirty 的后缀…</p>
+<p>dirty 后缀的原因找到了, 在 <code>/scrpit/setlocalversion</code> 里第 60 - 63 行, 如果有未提交的更改机会在内核后面加 <code>dirty</code> 的后缀：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Check <span class="keyword">for</span> uncommitted changes</span></span><br><span class="line">if git diff-index --name-only HEAD | grep -qv "^scripts/package"; then</span><br><span class="line">    printf '%s' -dirty</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>上面的 if 判断注释掉就就不会有 dirty 后缀了。</p>
+<p>开机后发现有些第三方的预装 APP。这些 APP 在刷机包里对应的文件在 <code>userdata.img</code> 里。可以用 <code>simg2img</code> 将 img 文件转成 ext4 文件再用 mount 挂载编辑，然后打包回来，这样很麻烦。搜了下发现可以直接用蘑菇 ROM 助手来在图形界面下编辑预装 APP 然后打包，非常方便。将精简好的 <code>userdata.img</code> 文件放回到刷机包，刷机完成后系统会非常干净。</p>
+<p>这篇文章参考了：</p>
+<p><a href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/wiki/How-to-compile-kernel-standalone" target="_blank" rel="noopener">How to compile kernel standalone</a></p>
+<p><a href="https://giglf.github.io/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/" target="_blank" rel="noopener">编译小米3td内核记录</a></p>
+<p><a href="https://github.com/MiCode/Xiaomi_Kernel_OpenSource/issues/957" target="_blank" rel="noopener">求大佬发编译教程</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/37cb43d0/" title="一次纠结的小米 3 TD 内核编译经历">https://absinthes2049.github.io/37cb43d0/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3bda295d/" rel="prev" title="解决子系统 MySQL 启动失败的问题">
+      <i class="fa fa-chevron-left"></i> 解决子系统 MySQL 启动失败的问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/df5d379e/" rel="next" title="将 mdf 文件导入 SQL Server 失败提示拒绝访问的错误处理">
+      将 mdf 文件导入 SQL Server 失败提示拒绝访问的错误处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : '32fbed2ce94b5a919be806e478f7e247',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

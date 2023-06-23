@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="树的术语和定义节点节点是树的基础部分。节点可以有自己的名字，被称作“键”，节点也可以有附带信息，被称为“有效载荷”。 边两个节点通过一条边相连，表示他们之间存在关系。除了根节点之外，其他每个节点仅有一条入边，出边则可能有多条。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据结构与算法补全系列(四)--树">
+<meta property="og:url" content="https://absinthes2049.github.io/3dd4cabe/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="树的术语和定义节点节点是树的基础部分。节点可以有自己的名字，被称作“键”，节点也可以有附带信息，被称为“有效载荷”。 边两个节点通过一条边相连，表示他们之间存在关系。除了根节点之外，其他每个节点仅有一条入边，出边则可能有多条。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-25T02:05:32.000Z">
+<meta property="article:modified_time" content="2021-08-31T01:27:48.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://absinthes2049.github.io/3dd4cabe/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python数据结构与算法补全系列(四)--树 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/3dd4cabe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python数据结构与算法补全系列(四)--树
+        </h1>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-25 10:05:32" itemprop="dateCreated datePublished" datetime="2021-03-25T10:05:32+08:00">2021-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-31 09:27:48" itemprop="dateModified" datetime="2021-08-31T09:27:48+08:00">2021-08-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science/" itemprop="url" rel="index"><span itemprop="name">Data Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="树的术语和定义"><a href="#树的术语和定义" class="headerlink" title="树的术语和定义"></a>树的术语和定义</h3><h4 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h4><p>节点是树的基础部分。节点可以有自己的名字，被称作“键”，节点也可以有附带信息，被称为“有效载荷”。</p>
+<h4 id="边"><a href="#边" class="headerlink" title="边"></a>边</h4><p>两个节点通过一条边相连，表示他们之间存在关系。除了根节点之外，其他每个节点仅有一条入边，出边则可能有多条。</p>
+<a id="more"></a>
+<h4 id="根节点"><a href="#根节点" class="headerlink" title="根节点"></a>根节点</h4><p>根节点是树中唯一没有入边的节点。</p>
+<h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h4><p>路径是由边连接的有序节点列表。比如，哺乳纲-&gt;食肉目-&gt;猫科-&gt;猫属-&gt;家猫。</p>
+<h4 id="子节点"><a href="#子节点" class="headerlink" title="子节点"></a>子节点</h4><p>一个节点通过出边与子节点相连。</p>
+<h4 id="父节点"><a href="#父节点" class="headerlink" title="父节点"></a>父节点</h4><p>一个节点是所有其子节点的父节点。</p>
+<h4 id="兄弟节点"><a href="#兄弟节点" class="headerlink" title="兄弟节点"></a>兄弟节点</h4><p>具有同一父节点的节点互称为兄弟节点。</p>
+<h4 id="子树"><a href="#子树" class="headerlink" title="子树"></a>子树</h4><p>一个父节点及其所有后代的节点和边构成一颗子树</p>
+<h4 id="叶子节点"><a href="#叶子节点" class="headerlink" title="叶子节点"></a>叶子节点</h4><p>叶子节点没有子节点。</p>
+<h4 id="层数"><a href="#层数" class="headerlink" title="层数"></a>层数</h4><p>节点 n 的层数是从根节点到 n 的唯一长度路径。</p>
+<h4 id="高度"><a href="#高度" class="headerlink" title="高度"></a>高度</h4><p>树的高度是其中节点层数的最大值。</p>
+<h4 id="树的定义一"><a href="#树的定义一" class="headerlink" title="树的定义一"></a>树的定义一</h4><p>树有以下属性：</p>
+<ul>
+<li>有一个根节点</li>
+<li>除根节点外，其他每个节点都与其唯一的父节点相连</li>
+<li>从根节点到其他每个节点都有且仅有一条路径</li>
+<li>如果每个节点最多有两个子节点，这样的树就被称为二叉树</li>
+</ul>
+<h4 id="树的定义二"><a href="#树的定义二" class="headerlink" title="树的定义二"></a>树的定义二</h4><p>一棵树要么为空，要么由一个根节点和零颗或多颗子树构成，子树本身也是一棵树。<br>每颗子树的根节点通过一条边连到父树的根节点。</p>
+<h3 id="树的-Python-实现"><a href="#树的-Python-实现" class="headerlink" title="树的 Python 实现"></a>树的 Python 实现</h3><p>根据上面的定义，可以用以下的函数创建并操作二叉树。</p>
+<ul>
+<li>BinaryTree() 创建一个二叉树实例</li>
+<li>getLeftChild() 返回当前节点的左子节点所对应的二叉树</li>
+<li>getRightChild() 返回当前节点的右子节点所对应的二叉树</li>
+<li>setRootVal(val) 在当前节点中存储参数 val 中的对象</li>
+<li>getRootVal() 返回当前节点存储的对象</li>
+<li>insertLeft(val) 新建一棵二叉树，并将其作为当前节点的左子节点</li>
+<li>insertRight(val) 新建一棵二叉树，并将其作为当前节点的右子节点</li>
+</ul>
+<h4 id="树的实现形式之一：列表之列表"><a href="#树的实现形式之一：列表之列表" class="headerlink" title="树的实现形式之一：列表之列表"></a>树的实现形式之一：列表之列表</h4><p>在列表之列表的树中，根节点的值作为列表的第一个元素，第二个元素是代表左子树的列表，第三个元素代表右子树。</p>
+<pre class="mermaid">graph TB
+
+a((a))
+b((b))
+c((c))
+d((d))
+e((e))
+f((f))
+a-->b
+a-->c
+b-->d
+b-->e
+c-->f</pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">my_tree = [</span><br><span class="line">  <span class="string">'a'</span>: <span class="comment"># 根节点</span></span><br><span class="line">  [</span><br><span class="line">    <span class="string">'b'</span>: <span class="comment"># 左子树</span></span><br><span class="line">    [</span><br><span class="line">      <span class="string">'d'</span>, [] ,[]</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">      <span class="string">'e'</span>, [], []</span><br><span class="line">    ]</span><br><span class="line">    <span class="string">'c'</span>, <span class="comment"># 右子树</span></span><br><span class="line">    [</span><br><span class="line">      <span class="string">'f'</span>, [], []</span><br><span class="line">    ],</span><br><span class="line">    []</span><br><span class="line">  ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>可以通过标准的列表切片访问子树。子树的列表结构也符合树的定义，所以列表之列表的结构是递归地。这种表示法可以推广到有很多子树的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; my_tree &#x3D; [&#39;a&#39;, [&#39;b&#39;, [&#39;d&#39;, [], []], [&#39;e&#39;, [], []]], [&#39;c&#39;, [&#39;f&#39;, [], []], []]]</span><br><span class="line">&gt;&gt;&gt; my_tree</span><br><span class="line">[&#39;a&#39;, [&#39;b&#39;, [&#39;d&#39;, [], []], [&#39;e&#39;, [], []]], [&#39;c&#39;, [&#39;f&#39;, [], []], []]]</span><br><span class="line">&gt;&gt;&gt; my_tree[1]</span><br><span class="line">[&#39;b&#39;, [&#39;d&#39;, [], []], [&#39;e&#39;, [], []]] </span><br><span class="line">&gt;&gt;&gt; my_tree[0]</span><br><span class="line">&#39;a&#39;</span><br><span class="line">&gt;&gt;&gt; my_tree[2]</span><br><span class="line">[&#39;c&#39;, [&#39;f&#39;, [], []], []]</span><br></pre></td></tr></table></figure>
+
+<p>通过函数定义树的数据结构：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_tree</span><span class="params">(r)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [r, [], []]</span><br><span class="line"></span><br><span class="line"><span class="comment">## 插入左子树</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_left</span><span class="params">(root, new_branch)</span>:</span></span><br><span class="line">    t = root.pop(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> len(t) &gt; <span class="number">1</span>:</span><br><span class="line">        root.insert(<span class="number">1</span>, [new_branch, t, []])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        root.insert(<span class="number">1</span>, [new_branch, [], []])</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line"><span class="comment">## 插入右子树</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_right</span><span class="params">(root, new_branch)</span>:</span></span><br><span class="line">    t = root.pop(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> len(t) &gt; <span class="number">1</span>:</span><br><span class="line">        root.insert(<span class="number">2</span>, [new_branch,[], t])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        root.insert(<span class="number">2</span>, [new_branch, [], []])</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_root_val</span><span class="params">(root)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> root[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_root_val</span><span class="params">(root, new_val)</span>:</span></span><br><span class="line">    root[<span class="number">0</span>] = new_val</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_left_child</span><span class="params">(root)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> root[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_right_child</span><span class="params">(root)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> root[<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+
+<p>要给树添加左子树时要特别注意，如果列表的左子树位置已经有内容了，要保留已有内容，并将它作为新列表的左子树。右子树同理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = binary_tree(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>insert_left(r, <span class="number">4</span>)</span><br><span class="line">[<span class="number">3</span>, [<span class="number">4</span>, [], []], []]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>insert_left(r, <span class="number">5</span>)</span><br><span class="line">[<span class="number">3</span>, [<span class="number">5</span>, [<span class="number">4</span>, [], []], []], []]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>insert_right(r, <span class="number">6</span>)</span><br><span class="line">[<span class="number">3</span>, [<span class="number">5</span>, [<span class="number">4</span>, [], []], []], [<span class="number">6</span>, [], []]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>insert_right(r, <span class="number">7</span>)</span><br><span class="line">[<span class="number">3</span>, [<span class="number">5</span>, [<span class="number">4</span>, [], []], []], [<span class="number">7</span>, [], [<span class="number">6</span>, [], []]]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = get_left_child(r)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">5</span>, [<span class="number">4</span>, [], []], []]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>set_root_val(l, <span class="number">9</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r</span><br><span class="line">[<span class="number">3</span>, [<span class="number">9</span>, [<span class="number">4</span>, [], []], []], [<span class="number">7</span>, [], [<span class="number">6</span>, [], []]]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>insert_left(l, <span class="number">11</span>)</span><br><span class="line">[<span class="number">9</span>, [<span class="number">11</span>, [<span class="number">4</span>, [], []], []], []]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r</span><br><span class="line">[<span class="number">3</span>, [<span class="number">9</span>, [<span class="number">11</span>, [<span class="number">4</span>, [], []], []], []], [<span class="number">7</span>, [], [<span class="number">6</span>, [], []]]]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>get_right_child(get_right_child(r))</span><br><span class="line">[<span class="number">6</span>, [], []]</span><br></pre></td></tr></table></figure>
+
+<h4 id="树的实现形式之二：节点与引用"><a href="#树的实现形式之二：节点与引用" class="headerlink" title="树的实现形式之二：节点与引用"></a>树的实现形式之二：节点与引用</h4><p>节点与引用表示法将树定义为一个类, 其中有根节点与左右子树的属性。树的左子树属性和右子树属性会指向树类的其他实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## BinaryTree 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryTree</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, root_obj)</span>:</span></span><br><span class="line">        self.key = root_obj</span><br><span class="line">        self.left_child = <span class="literal">None</span></span><br><span class="line">        self.right_child = <span class="literal">None</span></span><br><span class="line">    <span class="comment">## 插入左子节点</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert_left</span><span class="params">(self, new_node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.left_child == <span class="literal">None</span>:</span><br><span class="line">            self.left_child = BinaryTree(new_node)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            t = BinaryTree(new_node)</span><br><span class="line">            t.left_child = self.left_child</span><br><span class="line">            self.left_child = t</span><br><span class="line">    </span><br><span class="line">    <span class="comment">## 插入右子节点</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert_right</span><span class="params">(self, new_node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.right_child == <span class="literal">None</span>:</span><br><span class="line">            self.right_child = BinaryTree(new_node)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            t = BinaryTree(new_node)</span><br><span class="line">            t.right_child = self.right_child</span><br><span class="line">            self.right_child = t</span><br><span class="line">    <span class="comment">## 二叉树的访问函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_right_child</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.right_child</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_left_child</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.left_child</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_root_val</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        self.key = obj</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_root_val</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.key</span><br></pre></td></tr></table></figure>
+<p>正如二叉树的子树都是二叉树，根节点的左右子节点本身都是 BinaryTree 类的实例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = BinaryTree(<span class="string">'a'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.get_root_val()</span><br><span class="line"><span class="string">'a'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_left_child())</span><br><span class="line"><span class="literal">None</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.insert_left(<span class="string">'b'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_left_child())</span><br><span class="line">&lt;__main__.BinaryTree object at <span class="number">0x0000019EA28B8700</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_left_child().get_root_val())</span><br><span class="line">b</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.insert_right(<span class="string">'c'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_right_child())</span><br><span class="line">&lt;__main__.BinaryTree object at <span class="number">0x0000019EA2793E80</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_right_child().get_root_val())</span><br><span class="line">c</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r.get_right_child().set_root_val(<span class="string">'hello'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.get_right_child().get_root_val())</span><br><span class="line">hello</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="二叉树树的应用"><a href="#二叉树树的应用" class="headerlink" title="二叉树树的应用"></a>二叉树树的应用</h3><h4 id="解析树"><a href="#解析树" class="headerlink" title="解析树"></a>解析树</h4><p>可以用上面已经实现的树来解析一些实际问题，比如数学表达式这样的构造。比如，可以将 ((7 + 3) * (5 - 2)) 这样的数学表达式表示成解析树。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pythonds.basic <span class="keyword">import</span> Stack</span><br><span class="line"><span class="keyword">from</span> pythonds.trees <span class="keyword">import</span> BinaryTree</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_parse_tree</span><span class="params">(fpexp)</span>:</span></span><br><span class="line">    fplist = fpexp.split()</span><br><span class="line">    p_stack = Stack()</span><br><span class="line">    e_tree = BinaryTree(<span class="string">''</span>)</span><br><span class="line">    p_stack.push(e_tree)</span><br><span class="line">    current_tree = e_tree</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> fplist:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">'('</span>:</span><br><span class="line">            current_tree.insertLeft(<span class="string">''</span>)</span><br><span class="line">            p_stack.push(current_tree)</span><br><span class="line">            current_tree = current_tree.getLeftChild()</span><br><span class="line">        <span class="keyword">elif</span> i <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">'+-*/)'</span>:</span><br><span class="line">            current_tree.setRootVal(eval(i))</span><br><span class="line">            parent = p_stack.pop()</span><br><span class="line">            current_tree = parent</span><br><span class="line">        <span class="keyword">elif</span> i <span class="keyword">in</span> <span class="string">'+-*/'</span>:</span><br><span class="line">            current_tree.setRootVal(i)</span><br><span class="line">            current_tree.insertRight(<span class="string">''</span>)</span><br><span class="line">            p_stack.push(current_tree)</span><br><span class="line">            current_tree = current_tree.getRightChild()</span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">')'</span>:</span><br><span class="line">            current_tree = p_stack.pop()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Unknown Operator: "</span> + i)</span><br><span class="line">    <span class="keyword">return</span> e_tree</span><br></pre></td></tr></table></figure>
+
+<p>定义如下 4 条规则：</p>
+<ol>
+<li>如果当前标记是 ( ，就为当前节点添加一个左子节点，并下沉至该子节点</li>
+<li>如果当前标记在列表 [‘+’, ‘-‘, ‘/‘, ‘*’] 中，就将当前节点的值设为当前标记对应的运算符；为当前节点添加一个右子节点，并下沉至该子节点</li>
+<li>如果当前标记是数字，就将当前节点的值设为这个数并返回至父节点</li>
+<li>如果当前标记是 ) ，就跳到当前节点的父节点</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="comment">## 计算二叉树的递归函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate</span><span class="params">(parse_tree)</span>:</span></span><br><span class="line">    opers = &#123;</span><br><span class="line">         <span class="string">'+'</span>:operator.add, </span><br><span class="line">          <span class="string">'-'</span>:operator.sub, </span><br><span class="line">          <span class="string">'*'</span>:operator.mul, </span><br><span class="line">          <span class="string">'/'</span>:operator.truediv&#125;</span><br><span class="line">    left_c = parseTree.getLeftChild() </span><br><span class="line">    right_c = parseTree.getRightChild() </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> left_c <span class="keyword">and</span> right_c:</span><br><span class="line">        fn = opers[parseTree.getRootVal()] </span><br><span class="line">        <span class="keyword">return</span> fn(evaluate(left_c), evaluate(right_c))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> parseTree.getRootVal()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>fpexp = <span class="string">'( ( 7 + 3 ) * ( 5 - 2 ) )'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>fpexp_tree =  build_parse_tree(fpexp)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>evaluate(fpexp_tree)</span><br><span class="line"><span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="树的遍历"><a href="#树的遍历" class="headerlink" title="树的遍历"></a>树的遍历</h4><p>树的遍历方法有三种： 前序遍历、中序遍历和后序遍历</p>
+<ul>
+<li>前序遍历：在前序遍历中，先访问根节点，然后递归地前序遍历左子树，最后递归地前序遍历右子树。</li>
+<li>中序遍历：在中序遍历中，先递归地中序遍历左子树，然后访问根节点，最后递归地中序遍历右子树。</li>
+<li>后序遍历：在后序遍历中，先递归地后序遍历右子树，然后递归地后序遍历左子树，最后访问根节点。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 将前序遍历算法实现为 BinaryTree 类的方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preorder</span><span class="params">(self)</span>:</span></span><br><span class="line">    print(self.key)</span><br><span class="line">    <span class="keyword">if</span> self.left_child:</span><br><span class="line">        self.left_child.preorder()</span><br><span class="line">    <span class="keyword">if</span> self.right_child：</span><br><span class="line">        self.right_child.preorder()</span><br></pre></td></tr></table></figure>
+
+<p>用后序遍历重写计算函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_order_eval</span><span class="params">(tree)</span>:</span></span><br><span class="line">    opers = &#123;</span><br><span class="line">         <span class="string">'+'</span>:operator.add, </span><br><span class="line">          <span class="string">'-'</span>:operator.sub, </span><br><span class="line">          <span class="string">'*'</span>:operator.mul, </span><br><span class="line">          <span class="string">'/'</span>:operator.truediv&#125;</span><br><span class="line">    </span><br><span class="line">    res1 = <span class="literal">None</span></span><br><span class="line">    res2 = <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> tree:</span><br><span class="line">        res1 = post_order_eval(tree.getLeftChild())</span><br><span class="line">        res2 = post_order_eval(tree.getRightChild())</span><br><span class="line">        <span class="keyword">if</span> res1 <span class="keyword">and</span> res2:</span><br><span class="line">            <span class="keyword">return</span> opers[tree.getRootVal()](res1, res2)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> tree.getRootVal()</span><br></pre></td></tr></table></figure>
+
+<p>用中序遍历打印括号表达式:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printexp</span><span class="params">(tree)</span>:</span></span><br><span class="line">    s_val = <span class="string">""</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> tree:</span><br><span class="line">        s_val = <span class="string">'('</span> + printexp(tree.getLeftChild())</span><br><span class="line">        s_val = s_val + str(tree.getRootVal())</span><br><span class="line">        s_val = s_val + printexp(tree.getRightChild()) + <span class="string">')'</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> s_val</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> pythonds.trees <span class="keyword">import</span> BinaryTree </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = BinaryTree(<span class="string">'*'</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.insertLeft(<span class="string">'+'</span>)  </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = x.getLeftChild() </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l.insertLeft(<span class="number">4</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l.insertRight(<span class="number">5</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.insertRight(<span class="number">7</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(printexp(x)) </span><br><span class="line">(((<span class="number">4</span>) + (<span class="number">5</span>)) * (<span class="number">7</span>)) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(postordereval(x)) </span><br><span class="line"><span class="number">63</span> </span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="二叉堆"><a href="#二叉堆" class="headerlink" title="二叉堆"></a>二叉堆</h3><p>二叉堆是实现优先级队列的经典方法。而插队的入队和出队操作都可以达到 O(logn)。二叉堆画出来很像一棵树，但实现时只用一个列表作为内部表示。<br>二叉堆的两个常见的变体为：最小堆（最小的元素一直在队首）与最大堆（最大的元素一直在队首）。</p>
+<h4 id="二叉堆的实现"><a href="#二叉堆的实现" class="headerlink" title="二叉堆的实现"></a>二叉堆的实现</h4><p>如果一个二叉树除了最底层，其他每一层的节点都是满的，这个二叉树就被称为完全二叉树。引出完全二叉树的概念有助于高效地实现二叉堆。</p>
+<p>堆的有序性：对于堆中任意元素 x 及其父元素 p，p 都不大于 x。<br>二叉堆类 BinaryHeap 的 heal_list 的第一个元素是 0 ，它的唯一用途是为了使后续的方法可以使用整数除法。</p>
+<p>BinaryHeap 的 insert 方法先将元素追加到列表的末尾，然后通过比较新元素与父元素的大小。如果新元素小于其父元素就将二者交换，以此来保证堆的结构性质。通过 perc_up 方法，元素将一直沿着树向上移动，指导重获堆的结构性质。</p>
+<p>BinaryHeap 的 del_min 方法的难点是，如何在移除根节点后重构堆的性质和有序性。可以分两步重建堆：第一步，取出列表中最后一个元素，将其移到根节点的位置;第二步，将新的根节点沿着树推到正确的位置。通过辅助函数 perc_down 和 min_child 方法来实现上述 del_min 方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinaryHeap</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.heap_list = [<span class="number">0</span>]</span><br><span class="line">        self.current_size = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perc_up</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> i // <span class="number">2</span> &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> self.heap_list[i] &lt; self.heap_list[i // <span class="number">2</span>]:</span><br><span class="line">                self.heap_list[i // <span class="number">2</span>], self.heap_list[i] = self.heap_list[i], self.heap_list[i // <span class="number">2</span>]</span><br><span class="line">            i = i // <span class="number">2</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, k)</span>:</span></span><br><span class="line">        self.heap_list.append(k)</span><br><span class="line">        self.curent_size = self.current_size + <span class="number">1</span></span><br><span class="line">        self.perc_up(self.current_size)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perc_down</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> (i * <span class="number">2</span>) &lt;= self.current_size:</span><br><span class="line">            mc = self.min_child(i)</span><br><span class="line">            <span class="keyword">if</span> self.heap_list[i] &gt; self.heap_list[mc]:</span><br><span class="line">                self.heap_list[i], self.heap_list[mc] = self.heap_list[mc], self.heap_list[i]</span><br><span class="line">            i = mc</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">min_child</span><span class="params">(self, i)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> i * <span class="number">2</span> + <span class="number">1</span> &gt; self.current_size:</span><br><span class="line">            <span class="keyword">return</span> i * <span class="number">2</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> self.heap_list[i * <span class="number">2</span>] &lt; self.heap_list[i * <span class="number">2</span> + <span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">del_min</span><span class="params">(self)</span>:</span></span><br><span class="line">        ret_val = self.heap_list[i]</span><br><span class="line">        self.heap_list[<span class="number">1</span>] = self.heap_list[self.current_size]</span><br><span class="line">        self.current_size = self.current_size - <span class="number">1</span></span><br><span class="line">        self.heap_list.pop()</span><br><span class="line">        self.perc_down(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> ret_val</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_heap</span><span class="params">(self, alist)</span>:</span></span><br><span class="line">        i = len(alist) // <span class="number">2</span></span><br><span class="line">        self.current_size = len(alist)</span><br><span class="line">        self.heap_list = [<span class="number">0</span>] + alist[:]</span><br><span class="line">        <span class="keyword">while</span> (i &gt; <span class="number">0</span>):</span><br><span class="line">            self.perc_down(i)</span><br><span class="line">            i = i - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;a = BinaryHeap()</span><br><span class="line">&gt;&gt;&gt;a.build_heap([<span class="number">9</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">&gt;&gt;&gt;print(a.heap_list)</span><br><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><p>二叉搜索树是映射的另一种实现。</p>
+<p>二叉搜索树依赖于这样一个性质：小于父节点的键都在左子树中，大于父节点的键则都在右子树中。</p>
+<p>使用 BinarySearchTree 类和 TreeNode 类来实现二叉搜索树：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTree</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.root = <span class="literal">None</span></span><br><span class="line">        self.size = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">length</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.root.__iter__()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self,key,val)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.root:</span><br><span class="line">            self._put(key,val,self.root)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.root = TreeNode(key,val)</span><br><span class="line">        self.size = self.size + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_put</span><span class="params">(self,key,val,currentNode)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> key &lt; currentNode.key:</span><br><span class="line">            <span class="keyword">if</span> currentNode.hasLeftChild():</span><br><span class="line">                self._put(key,val,currentNode.leftChild)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                currentNode.leftChild = TreeNode(key,val,parent=currentNode)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> currentNode.hasRightChild():</span><br><span class="line">                self._put(key,val,currentNode.rightChild)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                currentNode.rightChild = TreeNode(key,val,parent=currentNode)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self,k,v)</span>:</span></span><br><span class="line">        self.put(k,v)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.root:</span><br><span class="line">            res = self._get(key,self.root)</span><br><span class="line">            <span class="keyword">if</span> res:</span><br><span class="line">                <span class="keyword">return</span> res.payload</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get</span><span class="params">(self,key,currentNode)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> currentNode:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">elif</span> currentNode.key == key:</span><br><span class="line">            <span class="keyword">return</span> currentNode</span><br><span class="line">        <span class="keyword">elif</span> key &lt; currentNode.key:</span><br><span class="line">            <span class="keyword">return</span> self._get(key,currentNode.leftChild)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self._get(key,currentNode.rightChild)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.get(key)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__contains__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self._get(key,self.root):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self,key)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.size &gt; <span class="number">1</span>:</span><br><span class="line">        nodeToRemove = self._get(key,self.root)</span><br><span class="line">        <span class="keyword">if</span> nodeToRemove:</span><br><span class="line">            self.remove(nodeToRemove)</span><br><span class="line">            self.size = self.size<span class="number">-1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> KeyError(<span class="string">'Error, key not in tree'</span>)</span><br><span class="line">    <span class="keyword">elif</span> self.size == <span class="number">1</span> <span class="keyword">and</span> self.root.key == key:</span><br><span class="line">        self.root = <span class="literal">None</span></span><br><span class="line">        self.size = self.size - <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span> KeyError(<span class="string">'Error, key not in tree'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__delitem__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        self.delete(key)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findSuccessor</span><span class="params">(self)</span>:</span></span><br><span class="line">        succ = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">if</span> self.hasRightChild():</span><br><span class="line">            succ = self.rightChild.findMin()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> self.parent:</span><br><span class="line">                <span class="keyword">if</span> self.isLeftChild():</span><br><span class="line">                    succ = self.parent</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self.parent.rightChild = <span class="literal">None</span></span><br><span class="line">                    succ = self.parent.findSuccessor()</span><br><span class="line">                    self.parent.rightChild = self</span><br><span class="line">        <span class="keyword">return</span> succ</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findMin</span><span class="params">(self)</span>:</span></span><br><span class="line">        current = self</span><br><span class="line">        <span class="keyword">while</span> current.hasLeftChild():</span><br><span class="line">            current = current.leftChild</span><br><span class="line">        <span class="keyword">return</span> current</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spliceOut</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.isLeaf():</span><br><span class="line">            <span class="keyword">if</span> self.isLeftChild():</span><br><span class="line">                self.parent.leftChild = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.parent.rightChild = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">elif</span> self.hasAnyChildren():</span><br><span class="line">            <span class="keyword">if</span> self.hasLeftChild():</span><br><span class="line">                <span class="keyword">if</span> self.isLeftChild():</span><br><span class="line">                    self.parent.leftChild = self.leftChild</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self.parent.rightChild = self.leftChild</span><br><span class="line">                self.leftChild.parent = self.parent</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> self.isLeftChild():</span><br><span class="line">                    self.parent.leftChild = self.rightChild</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self.parent.rightChild = self.rightChild</span><br><span class="line">                self.rightChild.parent = self.parent</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(self, currentNode)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> currentNode.isLeaf():</span><br><span class="line">            <span class="keyword">if</span> currentNode == currentNode.parent.leftChild:</span><br><span class="line">                currentNode.parent.leftChild = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                currentNode.parent.rightChild = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>: <span class="comment"># this node has one child</span></span><br><span class="line">            <span class="keyword">if</span> currentNode.hasLeftChild():</span><br><span class="line">                <span class="keyword">if</span> currentNode.isLeftChild():</span><br><span class="line">                currentNode.leftChild.parent = currentNode.parent</span><br><span class="line">                currentNode.parent.leftChild = currentNode.leftChild</span><br><span class="line">                <span class="keyword">elif</span> currentNode.isRightChild():</span><br><span class="line">                currentNode.leftChild.parent = currentNode.parent</span><br><span class="line">                currentNode.parent.rightChild = currentNode.leftChild</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                currentNode.replaceNodeData(currentNode.leftChild.key,</span><br><span class="line">                                    currentNode.leftChild.payload,</span><br><span class="line">                                    currentNode.leftChild.leftChild,</span><br><span class="line">                                    currentNode.leftChild.rightChild)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> currentNode.isLeftChild():</span><br><span class="line">                currentNode.rightChild.parent = currentNode.parent</span><br><span class="line">                currentNode.parent.leftChild = currentNode.rightChild</span><br><span class="line">                <span class="keyword">elif</span> currentNode.isRightChild():</span><br><span class="line">                currentNode.rightChild.parent = currentNode.parent</span><br><span class="line">                currentNode.parent.rightChild = currentNode.rightChild</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                currentNode.replaceNodeData(currentNode.rightChild.key,</span><br><span class="line">                                    currentNode.rightChild.payload,</span><br><span class="line">                                    currentNode.rightChild.leftChild,</span><br><span class="line">                                    currentNode.rightChild.rightChild)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> currentNode.hasBothChildren(): <span class="comment">#interior</span></span><br><span class="line">                succ = currentNode.findSuccessor()</span><br><span class="line">                succ.spliceOut()</span><br><span class="line">                currentNode.key = succ.key</span><br><span class="line">                currentNode.payload = succ.payload</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self:</span><br><span class="line">        <span class="keyword">if</span> self.hasLeftChild():</span><br><span class="line">                <span class="keyword">for</span> elem <span class="keyword">in</span> self.leftChiLd:</span><br><span class="line">                    <span class="keyword">yield</span> elem</span><br><span class="line">        <span class="keyword">yield</span> self.key</span><br><span class="line">        <span class="keyword">if</span> self.hasRightChild():</span><br><span class="line">                <span class="keyword">for</span> elem <span class="keyword">in</span> self.rightChild:</span><br><span class="line">                    <span class="keyword">yield</span> elem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,key,val,left=None,right=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                                       parent=None)</span>:</span></span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = val</span><br><span class="line">        self.leftChild = left</span><br><span class="line">        self.rightChild = right</span><br><span class="line">        self.parent = parent</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasLeftChild</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.leftChild</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasRightChild</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.rightChild</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isLeftChild</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.parent <span class="keyword">and</span> self.parent.leftChild == self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isRightChild</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.parent <span class="keyword">and</span> self.parent.rightChild == self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isRoot</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> self.parent</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isLeaf</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> (self.rightChild <span class="keyword">or</span> self.leftChild)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasAnyChildren</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.rightChild <span class="keyword">or</span> self.leftChild</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasBothChildren</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.rightChild <span class="keyword">and</span> self.leftChild</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">replaceNodeData</span><span class="params">(self,key,value,lc,rc)</span>:</span></span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.leftChild = lc</span><br><span class="line">        self.rightChild = rc</span><br><span class="line">        <span class="keyword">if</span> self.hasLeftChild():</span><br><span class="line">            self.leftChild.parent = self</span><br><span class="line">        <span class="keyword">if</span> self.hasRightChild():</span><br><span class="line">            self.rightChild.parent = self</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/3dd4cabe/" title="Python数据结构与算法补全系列(四)--树">https://absinthes2049.github.io/3dd4cabe/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/b4cd6816/" rel="prev" title="Python数据结构与算法补全系列(三)--搜索和排序">
+      <i class="fa fa-chevron-left"></i> Python数据结构与算法补全系列(三)--搜索和排序
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/7c1ea0e4/" rel="next" title="Python数据结构与算法补全系列(五)--图">
+      Python数据结构与算法补全系列(五)--图 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#树的术语和定义"><span class="nav-number">1.</span> <span class="nav-text">树的术语和定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点"><span class="nav-number">1.1.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#边"><span class="nav-number">1.2.</span> <span class="nav-text">边</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#根节点"><span class="nav-number">1.3.</span> <span class="nav-text">根节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路径"><span class="nav-number">1.4.</span> <span class="nav-text">路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子节点"><span class="nav-number">1.5.</span> <span class="nav-text">子节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父节点"><span class="nav-number">1.6.</span> <span class="nav-text">父节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兄弟节点"><span class="nav-number">1.7.</span> <span class="nav-text">兄弟节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子树"><span class="nav-number">1.8.</span> <span class="nav-text">子树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#叶子节点"><span class="nav-number">1.9.</span> <span class="nav-text">叶子节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#层数"><span class="nav-number">1.10.</span> <span class="nav-text">层数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高度"><span class="nav-number">1.11.</span> <span class="nav-text">高度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的定义一"><span class="nav-number">1.12.</span> <span class="nav-text">树的定义一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的定义二"><span class="nav-number">1.13.</span> <span class="nav-text">树的定义二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树的-Python-实现"><span class="nav-number">2.</span> <span class="nav-text">树的 Python 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#树的实现形式之一：列表之列表"><span class="nav-number">2.1.</span> <span class="nav-text">树的实现形式之一：列表之列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的实现形式之二：节点与引用"><span class="nav-number">2.2.</span> <span class="nav-text">树的实现形式之二：节点与引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树树的应用"><span class="nav-number">3.</span> <span class="nav-text">二叉树树的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解析树"><span class="nav-number">3.1.</span> <span class="nav-text">解析树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的遍历"><span class="nav-number">3.2.</span> <span class="nav-text">树的遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉堆"><span class="nav-number">4.</span> <span class="nav-text">二叉堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉堆的实现"><span class="nav-number">4.1.</span> <span class="nav-text">二叉堆的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树"><span class="nav-number">5.</span> <span class="nav-text">二叉搜索树</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : '632d6eff85228b32feb1402fb5bc1ecc',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

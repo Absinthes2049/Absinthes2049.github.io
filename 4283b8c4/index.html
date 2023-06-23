@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="VBA 其实是可以(有限地)支持面向对象编程的。在 VBA 里有一些内置的类：Collection, Workbook, Worksheet 等等，但我们可以用 Class Modules 来构建自己需要的类。 创建一个类时，insert 后面选 Class Module, 然后在属性窗口修改默认的命名（如 CTest）。然后在第一行声明一个变量： 12&#39;Class Module： CTestPu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VBA 面向对象编程">
+<meta property="og:url" content="https://absinthes2049.github.io/4283b8c4/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="VBA 其实是可以(有限地)支持面向对象编程的。在 VBA 里有一些内置的类：Collection, Workbook, Worksheet 等等，但我们可以用 Class Modules 来构建自己需要的类。 创建一个类时，insert 后面选 Class Module, 然后在属性窗口修改默认的命名（如 CTest）。然后在第一行声明一个变量： 12&#39;Class Module： CTestPu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-14T14:23:37.000Z">
+<meta property="article:modified_time" content="2021-12-18T11:09:52.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta property="article:tag" content="VBA">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://absinthes2049.github.io/4283b8c4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>VBA 面向对象编程 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/4283b8c4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VBA 面向对象编程
+        </h1>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-14 22:23:37" itemprop="dateCreated datePublished" datetime="2021-12-14T22:23:37+08:00">2021-12-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-18 19:09:52" itemprop="dateModified" datetime="2021-12-18T19:09:52+08:00">2021-12-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VBA/" itemprop="url" rel="index"><span itemprop="name">VBA</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>VBA 其实是可以(有限地)支持面向对象编程的。在 VBA 里有一些内置的类：Collection, Workbook, Worksheet 等等，但我们可以用 Class Modules 来构建自己需要的类。</p>
+<p>创建一个类时，insert 后面选 Class Module, 然后在属性窗口修改默认的命名（如 CTest）。然后在第一行声明一个变量：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CTest</span></span><br><span class="line"><span class="keyword">Public</span> Name <span class="keyword">As</span> <span class="built_in">String</span></span><br></pre></td></tr></table></figure>
+<p>现在在普通的 Module 里就可以引用这个类了：</p>
+<a id="more"></a>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> clsSomeObject <span class="keyword">As</span> <span class="keyword">New</span> CTest</span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> PrintTestString()</span><br><span class="line">    <span class="keyword">Dim</span> clsSomeObject <span class="keyword">As</span> <span class="keyword">New</span> CTest</span><br><span class="line">    clsSomeObject.Name = <span class="string">"Hello, world"</span></span><br><span class="line">    Debug.Print clsSomeObject.Name</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<h2 id="Class-Module-的组成"><a href="#Class-Module-的组成" class="headerlink" title="Class Module 的组成"></a>Class Module 的组成</h2><p>一个典型的 Class Module 由 4 个部分组成：</p>
+<ol>
+<li>Methods – functions or subs</li>
+<li>Member variables – variables</li>
+<li>Properties– 类别属于 functions 或者 subs 但在类中却像 variables 一样</li>
+<li>Events – 被某些事件触发的一类 subs</li>
+</ol>
+<p>一个简单的 Class Module 示例：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CAccount</span></span><br><span class="line"><span class="comment">'Member variable</span></span><br><span class="line"><span class="keyword">Private</span> fBalance <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'Properties</span></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Get</span> Balance() <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line">    Balance = fBalance</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Let</span> Balance(value <span class="keyword">As</span> <span class="built_in">Double</span>)</span><br><span class="line">    fBalance = value</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'Event - triggered when class created</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Sub</span> Class_Initialize()</span><br><span class="line">    fBalance = <span class="number">100</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="comment">' Methods</span></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> Withdraw(amount <span class="keyword">As</span> <span class="built_in">Double</span>)</span><br><span class="line">    fBalance = fBalance - amount</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> Deposit(amount <span class="keyword">As</span> <span class="built_in">Double</span>)</span><br><span class="line">    fBalance = fBalance + amount</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>然后引用这个类：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> PrintAccount()</span><br><span class="line">    <span class="keyword">Dim</span> clsAccount <span class="keyword">As</span> <span class="keyword">New</span> CAccount</span><br><span class="line">    </span><br><span class="line">    Debug.Print <span class="string">"At first you have: "</span> &amp; clsAccount.Balance</span><br><span class="line">    </span><br><span class="line">    clsAccount.Deposit <span class="number">50</span></span><br><span class="line">    </span><br><span class="line">    Debug.Print <span class="string">"After deposit you have: "</span> &amp; clsAccount.Balance</span><br><span class="line">    </span><br><span class="line">    clsAccount.Withdraw <span class="number">100</span></span><br><span class="line">    </span><br><span class="line">    Debug.Print <span class="string">"After withdraw you have: "</span> &amp; clsAccount.Balance</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">At first you have: 100</span><br><span class="line">After deposit you have: 150</span><br><span class="line">After withdraw you have: 50</span><br></pre></td></tr></table></figure>
+
+<h2 id="Class-Module-Methods"><a href="#Class-Module-Methods" class="headerlink" title="Class Module Methods"></a>Class Module Methods</h2><p>在 VBA 里类方法是类的 subs 或 functions. 和类变量一样，类方法的属性可以是 Public 或 Private.</p>
+<p>举个栗子：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CExample</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> PrintText(<span class="keyword">text</span> <span class="keyword">As</span> <span class="built_in">String</span>)</span><br><span class="line">    Debug.Print <span class="keyword">text</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Function</span> Calculate(amount <span class="keyword">As</span> <span class="built_in">Double</span>) <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line">    Calculate = amount - GetDeduction</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'Private 的类方法只能在类内调用</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Function</span> GetDeduction() <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line">    GetDuction = <span class="number">2.78</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+<p>然后调用这个类：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> ClassMembers()</span><br><span class="line">    <span class="keyword">Dim</span> oSimple <span class="keyword">As</span> <span class="keyword">New</span> CExample</span><br><span class="line">    oSimple.PrintText <span class="string">"Hello"</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Dim</span> total <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line">    total = oSimple.Calculate(<span class="number">22.44</span>)</span><br><span class="line">    Debug.Print total</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Class-Module-Member-Variables"><a href="#Class-Module-Member-Variables" class="headerlink" title="Class Module Member Variables"></a>Class Module Member Variables</h2><p>类变量和 VBA 中普通的变量非常相似，唯一的区别是在定义是用 Private 或 Public 而不是 Dim.</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CBankAccount</span></span><br><span class="line"><span class="keyword">Private</span> fBalance <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line"><span class="keyword">Public</span> sName <span class="keyword">As</span> <span class="built_in">String</span></span><br></pre></td></tr></table></figure>
+
+<p>用 Public 关键字定义的变量意味着我们可以在类外访问这个变量：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'这段 code 会报错</span></span><br><span class="line"><span class="keyword">Sub</span> DemoBankAccount()</span><br><span class="line">    <span class="keyword">Dim</span> oAccount <span class="keyword">As</span> <span class="keyword">New</span> CBankAccount</span><br><span class="line">    </span><br><span class="line">    <span class="comment">'Account 是可以访问的</span></span><br><span class="line">    oAccount.sName = <span class="string">"Trump"</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">'但 fBalance 不行</span></span><br><span class="line">    oAccount.fBalance = <span class="number">100</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>上面的例子中 fBalance 无法再类外被访问，因为在声明是这个变量是 Private 的. </p>
+<h2 id="Class-Module-Properties"><a href="#Class-Module-Properties" class="headerlink" title="Class Module Properties"></a>Class Module Properties</h2><ol>
+<li>Get - 从类中返回一个 object 或 value</li>
+<li>Let - 在类中设置一个 value</li>
+<li>Set - 在类中设置一个 object</li>
+</ol>
+<h3 id="VBA-Property-的格式"><a href="#VBA-Property-的格式" class="headerlink" title="VBA Property 的格式"></a>VBA Property 的格式</h3><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Public</span> <span class="keyword">Property</span> <span class="keyword">Get</span> () <span class="keyword">As</span> Type</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Property</span> <span class="keyword">Let</span> (varname <span class="keyword">As</span> Type )</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Property</span> <span class="keyword">Set</span> (varname <span class="keyword">As</span> Type )</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br></pre></td></tr></table></figure>
+
+<p>Property 其实就是类的一种 sub. Property 的目的是在类外访问或者修改类内的私有变量. 那为什么不直接在类内用 Public 变量呢？参考下面的 例子. 假设我们用一个 class 来维护一个国家列表，我们可以把这个列表用 array 存起来：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CCountry</span></span><br><span class="line">Public arrCountries as Variant</span><br><span class="line"></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Sub</span> Class_Initialize()</span><br><span class="line">    <span class="keyword">ReDim</span> arrCountries(<span class="number">1</span> <span class="keyword">To</span> <span class="number">1000</span>)</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>在类外如果用户想得到这个列表的 count 的话需要用以下的方法：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> GetNumCountries()</span><br><span class="line">    <span class="keyword">Dim</span> clsCountry <span class="keyword">As</span> CCountry</span><br><span class="line">    NumCountries = UBound(clsCountry.arrCountries) - LBound(clsCountry.arrCountries)</span><br><span class="line">    Debug.Print NumCountries</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>那么问题来了，<del>挖掘机技术哪家…</del> :</p>
+<ul>
+<li>为了得到国家的数量你需要先知道这个 list 是以什么方式存储的（这个 case 里是 array）</li>
+<li>如果我们把 Array 变成 Collection， 在我们的代码里所有引用这个 Array 的地方都需要更新</li>
+</ul>
+<p>为了避免上述问题在类里我们可以这样返回国家的数量：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CCountry</span></span><br><span class="line"><span class="keyword">Private</span> arrCountries() <span class="keyword">As</span> <span class="built_in">String</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Function</span> Count() <span class="keyword">As</span> <span class="built_in">Long</span></span><br><span class="line">    Count = UBound(arrCountries) + <span class="number">1</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在类外这样写：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> GetNumCountries()</span><br><span class="line">    <span class="keyword">Dim</span> clsCountry <span class="keyword">As</span> <span class="keyword">New</span> CCountry</span><br><span class="line">    Debug.Print <span class="string">"Number of countries is "</span> &amp; clsCountry.Count</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>当我们要把 Array 改成用 Collection 来存储国家列表时，只需要在类定义里修改如下，而在类外的代码无需改变：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CCountry</span></span><br><span class="line"><span class="keyword">Private</span> collCountries() <span class="keyword">As</span> Collection</span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Function</span> Count() <span class="keyword">As</span> <span class="built_in">Long</span></span><br><span class="line">    Count = collCountries.Count</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+<p>这样在类外引用时只需要引用 Count 函数就可以了，无须指导类内国家列表时如何定义的。</p>
+<p>在上面的例子中我们用了一些 sub 和 function 来处理需求，但 Property 还有更优雅的解决方案。</p>
+<h3 id="Using-a-Property-instead-of-a-Function-Sub"><a href="#Using-a-Property-instead-of-a-Function-Sub" class="headerlink" title="Using a Property instead of a Function/Sub"></a>Using a Property instead of a Function/Sub</h3><p>我们可以创建一个 Count Property 而不是 Count 函数：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Property</span> <span class="keyword">Get</span> Count() <span class="keyword">As</span> <span class="built_in">Long</span></span><br><span class="line">    Count = UBound(arrCountries) - LBound(arrCountries) + <span class="number">1</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br></pre></td></tr></table></figure>
+
+<p>用 Property 与用 Function 还是有所不同的。通常我们还会写一个 Let Property：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CPropertyTest</span></span><br><span class="line"><span class="keyword">Private</span> fTotalCost <span class="keyword">As</span> <span class="built_in">Double</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Get</span> TotalCost() <span class="keyword">As</span> <span class="built_in">Long</span></span><br><span class="line">    TotalCost = fTotalCost</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Let</span> TotalCost(value <span class="keyword">As</span> <span class="built_in">Long</span>)</span><br><span class="line">    fTotalCost = value</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Sub</span> Class_Initialize()</span><br><span class="line">    fTotalCost = <span class="number">100</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 Let 我们可以向用一个变量一样用这个 Property：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> TestProperty()</span><br><span class="line">    <span class="keyword">Dim</span> clsTProperty <span class="keyword">As</span> <span class="keyword">New</span> CPropertyTest</span><br><span class="line">    clsTProperty.TotalCost = <span class="number">50</span></span><br><span class="line">    Debug.Print clsTProperty.TotalCost</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>通过 Let 和 Get 我们可以用同样的 name 来引用 Let 或 Get Property, 从而达到像使用变量一样使用 Property. 如果使用 sub 或 function 我们可能要把代码写成这样：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clsTProperty .SetTotalCost <span class="number">50</span></span><br><span class="line">value = clsTProperty.GetTotalCost</span><br></pre></td></tr></table></figure>
+
+<p>第三个 VBA Property 是 Set. Set 的用法和 Let 类似但是 Set 用来对 object 赋值。</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CPropertyTest</span></span><br><span class="line"><span class="keyword">Private</span> collPrices <span class="keyword">As</span> Collection</span><br><span class="line"></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Get</span> prices() <span class="keyword">As</span> Collection</span><br><span class="line">    <span class="keyword">Set</span> prices = collPrices</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Property</span> <span class="keyword">Set</span> prices(newPrices <span class="keyword">As</span> Collection)</span><br><span class="line">    <span class="keyword">Set</span> collPrices = newPrices</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Property</span></span><br></pre></td></tr></table></figure>
+
+<p>在类外我们可以这样用这个类：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Option</span> <span class="keyword">Explicit</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> TestLetSet()</span><br><span class="line">    <span class="keyword">Dim</span> Prices <span class="keyword">As</span> <span class="keyword">New</span> Collection</span><br><span class="line">    Prices.Add <span class="number">21.23</span></span><br><span class="line">    Prices.Add <span class="number">22.12</span></span><br><span class="line">    Prices.Add <span class="number">20.12</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Dim</span> clsCurrency <span class="keyword">As</span> <span class="keyword">New</span> CCurrency</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Set</span> clsCurrency.Prices = Prices</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Dim</span> PricesCopy <span class="keyword">As</span> Collection</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Set</span> PricesCopy = clsCurrency.Prices</span><br><span class="line">    </span><br><span class="line">    PrintCollection Prices, <span class="string">"Prices"</span></span><br><span class="line">    PrintCollection PricesCopy, <span class="string">"Copy"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Sub</span> PrintCollection(c <span class="keyword">As</span> Collection, name <span class="keyword">As</span> <span class="built_in">String</span>)</span><br><span class="line"></span><br><span class="line">    Debug.Print vbNewLine &amp; <span class="string">"Printing "</span> &amp; name &amp; <span class="string">":"</span></span><br><span class="line"></span><br><span class="line">    Dim item As Variant</span><br><span class="line">    <span class="keyword">For</span> <span class="keyword">Each</span> item <span class="keyword">In</span> c</span><br><span class="line">        Debug.Print item</span><br><span class="line">    <span class="keyword">Next</span> item</span><br><span class="line"></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>有一个需要注意的点事当我们用 Set 时我们其实在引用同一个 collection. Set 并没有创造 collection 的副本。</p>
+<h2 id="Class-Module-Events"><a href="#Class-Module-Events" class="headerlink" title="Class Module Events"></a>Class Module Events</h2><p>Class Module 有两个 Events:</p>
+<ol>
+<li>Initialize – 当类有新的对象创建时触发</li>
+<li>Terminate – 当类的对象被删除时触发</li>
+</ol>
+<p>Events 有点像 C++ 中的构造函数和析构函数。在大多数语言中，我们可以传递参数给构造函数但是在 VBA 中并不能。</p>
+<h3 id="Initialize"><a href="#Initialize" class="headerlink" title="Initialize"></a>Initialize</h3><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CSimple</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Sub</span> Class_Initialize()</span><br><span class="line">    MsgBox <span class="string">"Class is being initialized"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Sub</span> Class_Terminate()</span><br><span class="line">    MsgBox <span class="string">"Class is being terminated"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> PrintHello()</span><br><span class="line">    Debug.Print <span class="string">"Hello"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>在下面的 case 里， clsSimple 在我们第一次引用时才会被创建出来:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> ClassEventsInit()</span><br><span class="line">    <span class="keyword">Dim</span> clsSimple <span class="keyword">As</span> <span class="keyword">New</span> CSimple</span><br><span class="line"></span><br><span class="line">    <span class="comment">' Initialize occurs here</span></span><br><span class="line">    clsSimple.PrintHello</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>用 Set 还是 New 来创建新对象是还是有区别的。在下面的 case 里用 Set 来创建新对象：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> ClassEventsInit2()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">Dim</span> clsSimple <span class="keyword">As</span> CSimple</span><br><span class="line">    </span><br><span class="line">    <span class="comment">' Initialize occurs here</span></span><br><span class="line">    <span class="keyword">Set</span> clsSimple = <span class="keyword">New</span> CSimple</span><br><span class="line">    clsSimple.PrintHello</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<p>正如之前所说， 我们无法给 Initialize 传递参数。如果确实要做的话我们需要首先用一个函数来创建一个对象：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'Class Module： CSimple</span></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> Init(Price <span class="keyword">As</span> <span class="built_in">Double</span>) </span><br><span class="line"></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>在类外部调用时：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> test()</span><br><span class="line">    <span class="keyword">Dim</span> clsSimple <span class="keyword">As</span> CSimple</span><br><span class="line">    <span class="keyword">Set</span> clsSimple = CreateSimpleObject(<span class="number">199.99</span>)</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Public</span> <span class="keyword">Function</span> CreateSimpleObject(Price <span class="keyword">As</span> <span class="built_in">Double</span>) <span class="keyword">As</span> clsSimple</span><br><span class="line">    <span class="keyword">Dim</span> clsSimple <span class="keyword">As</span> <span class="keyword">New</span> CSimple</span><br><span class="line">    clsSimple.Init Price</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Set</span> CreateSimpleObject = clsSimple</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Terminate"><a href="#Terminate" class="headerlink" title="Terminate"></a>Terminate</h3><p>当我们将类的对象设置为 Nothing 时， Terminate 也会被触发：</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> ClassEventTerminate()</span><br><span class="line">    <span class="keyword">Dim</span> clsSimple <span class="keyword">As</span> CSimple</span><br><span class="line">    <span class="keyword">Set</span> clsSimple = <span class="keyword">New</span> CSimple</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">Set</span> clsSimple = <span class="literal">Nothing</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>[1] <a href="https://www.cnblogs.com/maweifeng/articles/198853.html" target="_blank" rel="noopener">https://www.cnblogs.com/maweifeng/articles/198853.html</a></li>
+<li>[2] <a href="https://excelmacromastery.com/vba-class-modules/#Class_Module_versus_Objects" target="_blank" rel="noopener">https://excelmacromastery.com/vba-class-modules/#Class_Module_versus_Objects</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/4283b8c4/" title="VBA 面向对象编程">https://absinthes2049.github.io/4283b8c4/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VBA/" rel="tag"># VBA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3f869a17/" rel="prev" title="一个简单的推荐算法模型">
+      <i class="fa fa-chevron-left"></i> 一个简单的推荐算法模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/c074f8eb/" rel="next" title="2021年度总结与2022年规划">
+      2021年度总结与2022年规划 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Module-的组成"><span class="nav-number">1.</span> <span class="nav-text">Class Module 的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Module-Methods"><span class="nav-number">2.</span> <span class="nav-text">Class Module Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Module-Member-Variables"><span class="nav-number">3.</span> <span class="nav-text">Class Module Member Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Module-Properties"><span class="nav-number">4.</span> <span class="nav-text">Class Module Properties</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VBA-Property-的格式"><span class="nav-number">4.1.</span> <span class="nav-text">VBA Property 的格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-a-Property-instead-of-a-Function-Sub"><span class="nav-number">4.2.</span> <span class="nav-text">Using a Property instead of a Function&#x2F;Sub</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Module-Events"><span class="nav-number">5.</span> <span class="nav-text">Class Module Events</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Initialize"><span class="nav-number">5.1.</span> <span class="nav-text">Initialize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Terminate"><span class="nav-number">5.2.</span> <span class="nav-text">Terminate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : 'ede447ef40e7f75fef05b11996d546bc',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

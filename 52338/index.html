@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"absinthes2049.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+
+  <meta name="description" content="本文为译文，原文载于此,本文载于此。欢迎转载，但请保留本段文字，尊重作者和译者的权益。спасибо。  matplotlib.pyplot 包含一系列 MATLAB 风格的绘图函数。每个 matplotlib.pyplot 中的函数对当前图像进行一些修改，例如：产生新的图像，在图像中产生新的绘图区域，在绘图区域中画线，给绘图加上标记，等等。matplotlib.pyplot会自动记住当前的图像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pyplot教程">
+<meta property="og:url" content="https://absinthes2049.github.io/52338/index.html">
+<meta property="og:site_name" content="小米 6 首席研究员的研究报告集">
+<meta property="og:description" content="本文为译文，原文载于此,本文载于此。欢迎转载，但请保留本段文字，尊重作者和译者的权益。спасибо。  matplotlib.pyplot 包含一系列 MATLAB 风格的绘图函数。每个 matplotlib.pyplot 中的函数对当前图像进行一些修改，例如：产生新的图像，在图像中产生新的绘图区域，在绘图区域中画线，给绘图加上标记，等等。matplotlib.pyplot会自动记住当前的图像">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_1.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_2.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_3.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_4.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_5.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_6.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_7.png">
+<meta property="og:image" content="https://absinthes2049.github.io/52338/figure_8.png">
+<meta property="article:published_time" content="2017-04-08T15:34:07.000Z">
+<meta property="article:modified_time" content="2021-12-31T05:30:26.000Z">
+<meta property="article:author" content="Allen Dane">
+<meta property="article:tag" content="Pyplot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://absinthes2049.github.io/52338/figure_1.png">
+
+<link rel="canonical" href="https://absinthes2049.github.io/52338/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Pyplot教程 | 小米 6 首席研究员的研究报告集</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小米 6 首席研究员的研究报告集" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小米 6 首席研究员的研究报告集</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hi there!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/52338/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pyplot教程
+        </h1>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-08 23:34:07" itemprop="dateCreated datePublished" datetime="2017-04-08T23:34:07+08:00">2017-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-31 13:30:26" itemprop="dateModified" datetime="2021-12-31T13:30:26+08:00">2021-12-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文为译文，原文<a href="http://matplotlib.org/users/pyplot_tutorial.html" target="_blank" rel="noopener">载于此</a>,本文<a href="https://absinthes2049.github.io/2017/04/08/Pyplot%E6%95%99%E7%A8%8B/">载于此</a>。欢迎转载，但请保留本段文字，尊重作者和译者的权益。спасибо。</p>
+</blockquote>
+<p><code>matplotlib.pyplot</code> 包含一系列 <strong>MATLAB</strong> 风格的绘图函数。每个 matplotlib.pyplot 中的函数对当前图像进行一些修改，例如：产生新的图像，在图像中产生新的绘图区域，在绘图区域中画线，给绘图加上标记，等等。<code>matplotlib.pyplot</code>会自动记住当前的图像和绘图区域，因此这些函数会直接作用在当前的图像上，并且绘图函数会指向当前的坐标系(请注意这里的“坐标系”在大多数情况下是指某一图像的坐标系而非严格数学意义中的多坐标系)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">plt.ylabel(<span class="string">'some numbers'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_1.png" class title="figure_1">
+<a id="more"></a>
+<p>你可能想知道为什么坐标 x 的范围是 0－3 而坐标 y 的范围是 1－4 。当你提供一个单独的列表(list)或数组(array)给<code>plot()</code>时，matplotlib 会认为这是 y 的一个序列，同时自动生成 x 值。因为 python 区间从 0 开始，所以默认 x 向量和 y 长度相同且从 0 开始。因此 x 的数值范围是 [0,1,2,3]。</p>
+<p><code>plot()</code>是一个多用途的命令，并且可以输入任意数量的变脸。比如，画 x-y 图，你可以这样写命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br></pre></td></tr></table></figure>
+<p>対任意一对 x,y 变量，有一个可以控制线条的颜色和类型的格式字符串作为可选参数。格式字符串的代码和标志来源于 MATLAB ，你可以同时设置颜色和线条样式。默认的格式字符串是 ‘b-‘ ，也就是蓝色实线。举个栗子，用红圆点画上面的图像，你可以这样输入代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>], <span class="string">'ro'</span>)</span><br><span class="line">plt.axis([<span class="number">0</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">20</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_2.png" class title="figure_2">
+
+<p><code>plot()</code>的<a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot" target="_blank" rel="noopener">官方文档</a>有完整线条样式和格式字符串列表。在上面的例子中<code>axis()</code>命令传入了 [xmin, xmax, ymin, ymax] 列表，指定了坐标系的视口(ViewPort）。</p>
+<p>matplotlib 函数并不仅仅局限于操作列表数据。通常，我们会用到 <a href="http://www.numpy.org/" target="_blank" rel="noopener">numpy</a> 数组。事实上，所有的序列在函数内部都会转换成 numpy 数组。下面的例子展示了如何使用数组数据用一行代码画出不同样式的线条：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># evenly sampled time at 200ms intervals</span></span><br><span class="line">t = np.arange(<span class="number">0.</span>, <span class="number">5.</span>, <span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># red dashes, blue squares and green triangles</span></span><br><span class="line">plt.plot(t, t, <span class="string">'r--'</span>, t, t**<span class="number">2</span>, <span class="string">'bs'</span>, t, t**<span class="number">3</span>, <span class="string">'g^'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_3.png" class title="figure_3">
+
+<h2 id="控制线条属性"><a href="#控制线条属性" class="headerlink" title="控制线条属性"></a>控制线条属性</h2><p>图像的线条有很多可以设置的属性：线条宽度，线条样式，抗锯齿等等。具体可以参考 <a href="http://matplotlib.org/api/lines_api.html#matplotlib.lines.Line2D" target="_blank" rel="noopener">matplotlib.lines.Line2D</a>。有以下几种方法来设置线条属性：</p>
+<ul>
+<li>使用关键字</li>
+</ul>
+<p><code>plt.plot(x, y, linewidth=2.0)</code></p>
+<ul>
+<li>使用 <code>Line2D</code> 对象的 setter 方法。<code>plot</code> 返回一个由 <code>Line2D</code> 对象组成的列表。比如，<code>line1, line2 = plot(x1, y1, x2, y2)</code>。在下面的代码中我们认为我们只设置一条线所以列表长度为1。我们用 <code>line</code> 解压元组以获取列表的第一个元素：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">line, = plt.plot(x, y, <span class="string">'-'</span>)</span><br><span class="line">line.set_antialiased(<span class="literal">False</span>) <span class="comment"># turn off antialising</span></span><br></pre></td></tr></table></figure></li>
+<li>使用 <code>setp()</code> 命令。下面的例子用 MATLAB 风格的命令来设置线条的诸多属性。很明显， <code>step</code> 可以传入单一对象，也可以传入对象列表。我们可以用 Python 的关键字变量也可以用 MATLAB 风格的键/值对：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lines = plt.plot(x1, y1, x2, y2)</span><br><span class="line"><span class="comment"># use keyword args</span></span><br><span class="line">plt.setp(lines, color=<span class="string">'r'</span>, linewidth=<span class="number">2.0</span>)</span><br><span class="line"><span class="comment"># or MATLAB style string value pairs</span></span><br><span class="line">plt.setp(lines, <span class="string">'color'</span>, <span class="string">'r'</span>, <span class="string">'linewidth'</span>, <span class="number">2.0</span>)</span><br></pre></td></tr></table></figure>
+具体的 <code>Line2D</code> 属性参阅<a href="http://matplotlib.org/api/lines_api.html#matplotlib.lines.Line2D" target="_blank" rel="noopener">这里</a>。</li>
+</ul>
+<p>为了获得线条属性列表，可以用一条或多条线为参数调用 <code>setp()</code> 函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">69</span>]: lines = plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">70</span>]: plt.setp(lines)</span><br><span class="line">  alpha: float</span><br><span class="line">  animated: [<span class="literal">True</span> | <span class="literal">False</span>]</span><br><span class="line">  antialiased <span class="keyword">or</span> aa: [<span class="literal">True</span> | <span class="literal">False</span>]</span><br><span class="line">  ...snip</span><br></pre></td></tr></table></figure>
+
+<h2 id="子图和多坐标系"><a href="#子图和多坐标系" class="headerlink" title="子图和多坐标系"></a>子图和多坐标系</h2><p>MATLAB 和 <code>pyplot</code> 有当前图像和当前坐标系的概念。所有的绘图命令都应用于当前坐标系。<code>gca()</code> 命令返回当前的坐标系(axes)(一个 <code>axes</code> <a href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" target="_blank" rel="noopener">例子</a>),<code>gcf()</code>会返回当前图像(figure)(一个 <code>figure</code> <a href="http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" target="_blank" rel="noopener">例子</a>)。通常情况下我们不用顾虑这些，因为这些操作都在后台自动执行。下面是一个创建两个子图的命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</span><br><span class="line"></span><br><span class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</span><br><span class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)</span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">212</span>)</span><br><span class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_4.png" class title="figure_4">
+
+<p><code>figure()</code> 命令在这里是可选的，因为 <code>figure(1)</code> 会默认被创建。同样，如果不指定任何坐标系，<code>subplot(111)</code> 会被默认创建。当 <code>fignum</code>的范围是1到 <code>numrows*numcols</code>时， <code>subplot()</code> 命令会指定 <code>numrows</code>，<code>numcols</code>，<code>fignum</code>。如果 <code>numrows*numcols&lt;10</code>， <code>subplot</code> 命令中的逗号是可有可无的，所以 <code>subplot(211)</code> 和 <code>subplot(2, 1, 1)</code> 效果是一样的。我们可以创建任意数量的子图和坐标系。如果想手动配置坐标系而不是使用默认的矩形网格，可以用 <code>axes()</code> 的 <code>axes([left, bottom, width, height])</code> 命令来定位坐标系，此时所有坐标值在0到1之间。手动定位坐标系的例子可以看<a href="http://matplotlib.org/examples/pylab_examples/axes_demo.html#pylab-examples-axes-demo" target="_blank" rel="noopener">这里</a>，创建多子图的例子看<a href="http://matplotlib.org/examples/pylab_examples/subplots_demo.html#pylab-examples-subplots-demo" target="_blank" rel="noopener">这里</a>。</p>
+<p>我们可以调用多个 <code>figure()</code> 函数来创建多个图像，调用时注意图像编号。当然，每个图像可以包含多个子图和多个坐标系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.figure(<span class="number">1</span>)                <span class="comment"># the first figure</span></span><br><span class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># the first subplot in the first figure</span></span><br><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">plt.subplot(<span class="number">212</span>)             <span class="comment"># the second subplot in the first figure</span></span><br><span class="line">plt.plot([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">2</span>)                <span class="comment"># a second figure</span></span><br><span class="line">plt.plot([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])          <span class="comment"># creates a subplot(111) by default</span></span><br><span class="line"></span><br><span class="line">plt.figure(<span class="number">1</span>)                <span class="comment"># figure 1 current; subplot(212) still current</span></span><br><span class="line">plt.subplot(<span class="number">211</span>)             <span class="comment"># make subplot(211) in figure1 current</span></span><br><span class="line">plt.title(<span class="string">'Easy as 1, 2, 3'</span>) <span class="comment"># subplot 211 title</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>我们可以用 <code>clf()</code> 清空当前图像，用 <code>cla()</code> 清空当前坐标系。我们可能对状态(尤其是当前图像和当前坐标系)在后台保留感到烦躁，不过这只是一种有关对象指向 API 的弱状态封装(thin stateful wrapper)，可以用其他的命令代替(参阅<a href="http://matplotlib.org/users/artists.html#artist-tutorial" target="_blank" rel="noopener">Artist tutorial</a>)。</p>
+<p>如果要生成许多图像，我们还需要留意：图像占用的内存不会完全释放直到图像被 <code>close()</code> 命令明确无误地关闭。删除所有指向图像的引用，或者用 Windows 的程序管理器结束正在屏幕的图像进程是不够的，除非调用 <code>close()</code>，否则 pyplot 一直在后台运行。</p>
+<h2 id="图像中加入文本"><a href="#图像中加入文本" class="headerlink" title="图像中加入文本"></a>图像中加入文本</h2><p><code>text()</code> 命令可以在任意位置加入文本，<code>xlabel()</code> , <code>ylabel()</code> 和 <code>title()</code> 会在指定位置加入文本(参阅 <a href="http://matplotlib.org/users/text_intro.html#text-intro" target="_blank" rel="noopener">Text introduction</a>查看具体实例)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"></span><br><span class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></span><br><span class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># the histogram of the data</span></span><br><span class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'Smarts'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Probability'</span>)</span><br><span class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</span><br><span class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</span><br><span class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_5.png" class title="figure_5">
+
+<p>所有的 <code>text()</code> 命令都会返回一个 <code>matplotlib.text.Text</code> 对象。正如上面的例子，我们可以传递关键字参数或者用 <code>step()</code> 定制文本属性:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t = plt.xlabel(<span class="string">'my data'</span>, fontsize=<span class="number">14</span>, color=<span class="string">'red'</span>)</span><br></pre></td></tr></table></figure>
+<p>更多的有关文字属性的内容参阅<a href="http://matplotlib.org/users/text_props.html#text-properties" target="_blank" rel="noopener">Text properties and layout</a>。</p>
+<h3 id="在文本中用数学表达式"><a href="#在文本中用数学表达式" class="headerlink" title="在文本中用数学表达式"></a>在文本中用数学表达式</h3><p>matplotlib 文本接受任何形式的 TeX 方程式。举例来说，如果要以<img src="/52338/figure_6.png" class title="figure_6">为标题，那么我们的代码可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">r'$\sigma_i=15$'</span>)</span><br></pre></td></tr></table></figure>
+<p>在标题字符串之前的 <code>r</code> 很重要——它表示这是一个原始字符串，不要把反斜杠当作 Python 转移字符。 matplotlib 有一个内建的 TeX 解析器和渲染引擎，并且输出自己的数学字体——更多细节参阅<a href="http://matplotlib.org/users/mathtext.html#mathtext-tutorial" target="_blank" rel="noopener">Writing mathematical expressions</a>。因此你可以跨平台使用数学表达式而不需要预先安装 TeX 。如果已经安装了 LaTeX 和 dvipng ，可以用 LaTeX 来格式化文本，或者直接输出合并的图像或保存脚本——可以参阅<a href="http://matplotlib.org/users/usetex.html#usetex-tutorial" target="_blank" rel="noopener">Text rendering With LaTeX</a>。</p>
+<h3 id="注释文本"><a href="#注释文本" class="headerlink" title="注释文本"></a>注释文本</h3><p><code>text()</code> 命令基本的用法是可以在坐标系任意位置生成文本，如上所述。更普遍的用法是在图像中作注释标记。<code>annotate()</code> 函数提供了一个更简单的生成注释的方法。生成一个注释需要传入两个参数：注释所指向的位置参数 <code>xy</code> 和注释所生成的位置参数 <code>xytext</code>。两个参数都是 <code>(x,y)</code> 元组类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">ax = plt.subplot(<span class="number">111</span>)</span><br><span class="line"></span><br><span class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</span><br><span class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</span><br><span class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">plt.annotate(<span class="string">'local max'</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</span><br><span class="line">            arrowprops=dict(facecolor=<span class="string">'black'</span>, shrink=<span class="number">0.05</span>),</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">plt.ylim(<span class="number">-2</span>,<span class="number">2</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_7.png" class title="figure_7">
+
+<p>在个基础的例子中，<code>xy</code> (arrow tip) 和 <code>xytext</code> 位置都是数据坐标。有许多其他的坐标表示方法可以选择。详情可以参阅<a href="http://matplotlib.org/users/annotations.html#annotations-tutorial" target="_blank" rel="noopener">Basic annotation</a> 和 [Advanced Annotation](Advanced Annotation)。更多的例子可以参阅<a href="http://matplotlib.org/examples/pylab_examples/annotation_demo.html#pylab-examples-annotation-demo" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="对数和其他非线性坐标系"><a href="#对数和其他非线性坐标系" class="headerlink" title="对数和其他非线性坐标系"></a>对数和其他非线性坐标系</h2><p><code>matplotlib.pyplot</code> 除了支持线性尺度外，也支持对数尺度和回归尺度(logit scale)，通常在数据跨越许多数量级时要用到。改变坐标系的尺度很容易：<br><code>plt.xscale(&#39;log&#39;)</code><br>一个用相同数据不同 y 轴尺度的四个子图对比的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> NullFormatter  <span class="comment"># useful for `logit` scale</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># make up some data in the interval ]0, 1[</span></span><br><span class="line">y = np.random.normal(loc=<span class="number">0.5</span>, scale=<span class="number">0.4</span>, size=<span class="number">1000</span>)</span><br><span class="line">y = y[(y &gt; <span class="number">0</span>) &amp; (y &lt; <span class="number">1</span>)]</span><br><span class="line">y.sort()</span><br><span class="line">x = np.arange(len(y))</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot with various axes scales</span></span><br><span class="line">plt.figure(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># linear</span></span><br><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.yscale(<span class="string">'linear'</span>)</span><br><span class="line">plt.title(<span class="string">'linear'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># log</span></span><br><span class="line">plt.subplot(<span class="number">222</span>)</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.yscale(<span class="string">'log'</span>)</span><br><span class="line">plt.title(<span class="string">'log'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># symmetric log</span></span><br><span class="line">plt.subplot(<span class="number">223</span>)</span><br><span class="line">plt.plot(x, y - y.mean())</span><br><span class="line">plt.yscale(<span class="string">'symlog'</span>, linthreshy=<span class="number">0.01</span>)</span><br><span class="line">plt.title(<span class="string">'symlog'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># logit</span></span><br><span class="line">plt.subplot(<span class="number">224</span>)</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.yscale(<span class="string">'logit'</span>)</span><br><span class="line">plt.title(<span class="string">'logit'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># Format the minor tick labels of the y-axis into empty strings with</span></span><br><span class="line"><span class="comment"># `NullFormatter`, to avoid cumbering the axis with too many labels.</span></span><br><span class="line">plt.gca().yaxis.set_minor_formatter(NullFormatter())</span><br><span class="line"><span class="comment"># Adjust the subplot layout, because the logit one may take more space</span></span><br><span class="line"><span class="comment"># than usual, due to y-tick labels like "1 - 10^&#123;-3&#125;"</span></span><br><span class="line">plt.subplots_adjust(top=<span class="number">0.92</span>, bottom=<span class="number">0.08</span>, left=<span class="number">0.10</span>, right=<span class="number">0.95</span>, hspace=<span class="number">0.25</span>,</span><br><span class="line">                    wspace=<span class="number">0.35</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/52338/figure_8.png" class title="figure_8">
+<p>我们也可以加入自己的坐标尺度，详情可参阅<a href="http://matplotlib.org/devel/add_new_projection.html#adding-new-scales" target="_blank" rel="noopener">Developer’s guide for creating scales and transformations</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Allen Dane
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://absinthes2049.github.io/52338/" title="Pyplot教程">https://absinthes2049.github.io/52338/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Pyplot/" rel="tag"># Pyplot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/6888/" rel="prev" title="自建博客第一天">
+      <i class="fa fa-chevron-left"></i> 自建博客第一天
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/32919/" rel="next" title="快毕业了……">
+      快毕业了…… <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制线条属性"><span class="nav-number">1.</span> <span class="nav-text">控制线条属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子图和多坐标系"><span class="nav-number">2.</span> <span class="nav-text">子图和多坐标系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像中加入文本"><span class="nav-number">3.</span> <span class="nav-text">图像中加入文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在文本中用数学表达式"><span class="nav-number">3.1.</span> <span class="nav-text">在文本中用数学表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释文本"><span class="nav-number">3.2.</span> <span class="nav-text">注释文本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对数和其他非线性坐标系"><span class="nav-number">4.</span> <span class="nav-text">对数和其他非线性坐标系</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Allen Dane"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Allen Dane</p>
+  <div class="site-description" itemprop="description">就做了一点微小的工作，谢谢大家</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Allen Dane</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'e17a0186c22272330d69',
+      clientSecret: 'f9198833c43ced3eeb9dd3741c98366c2ce1f336',
+      repo        : 'Absinthes2049.github.io',
+      owner       : 'Absinthes2049',
+      admin       : ['Absinthes2049'],
+      id          : 'f9d4f4b83b10e363d6c60f2a7cdb6df1',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
