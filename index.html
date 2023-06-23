@@ -165,6 +165,219 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/5484bd8f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Allen Dane">
+      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/5484bd8f/" class="post-title-link" itemprop="url">搭建 CUDA 环境跑 roop 换脸模型</a>
+        </h2>
+
+        <div class="post-meta">
+        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-06-23 22:02:24 / Modified: 22:49:42" itemprop="dateCreated datePublished" datetime="2023-06-23T22:02:24+08:00">2023-06-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Little-Tips/" itemprop="url" rel="index"><span itemprop="name">Little Tips</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>发现一个有意思的 CV 项目： <a href="https://github.com/s0md3v/roop" target="_blank" rel="noopener">roop</a> , 号称能实现单图片换脸：</p>
+<blockquote>
+<p>You only need one image of the desired face. No dataset, no training.</p>
+</blockquote>
+<p>虽然可以写脚本部署在 Google Colab 上，不过还是尝试在本地 WSL 子系统部署试试。</p>
+<h2 id="电脑配置-amp-环境"><a href="#电脑配置-amp-环境" class="headerlink" title="电脑配置&amp;环境"></a>电脑配置&amp;环境</h2><ul>
+<li>i7-5500U, 16G, NVIDIA GeForce GTX 950M 2G</li>
+<li>Windows 10 教育版 22H2, WSL Ubuntu 20.04.6 LTS</li>
+</ul>
+<h2 id="安装-CUDA"><a href="#安装-CUDA" class="headerlink" title="安装 CUDA"></a>安装 CUDA</h2><p>在 roop 项目的 requirements 里发现了 tensorflow，不过目前好像 pip 安装 tensorflow 并不支持 CUDA 12,(实测确实不支持: (，除非是 docker 部署), 所以 apt 安装 CUDA 时需要指定版本为 CUDA 11</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cuda-11-6</span><br></pre></td></tr></table></figure>
+
+<p>其余的安装过程是按照 Nvidia 的 <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#network-repo-installation-for-wsl" target="_blank" rel="noopener">guide</a> 来</p>
+<p>安装完成后检查环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br><span class="line">nvcc -V</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-conda-环境"><a href="#创建-conda-环境" class="headerlink" title="创建 conda 环境"></a>创建 conda 环境</h2><p>新建一个 conda 环境，为了稳定使用的 Python 版本为 3.9：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n dl python&#x3D;&#x3D;3.9</span><br></pre></td></tr></table></figure>
+<p>然后按照如下 requirements 安装需要的包：</p>
+<details>
+<summary>requirements</summary>
+
+<p>absl-py==1.4.0</p>
+<p>albumentations==1.3.1</p>
+<p>astunparse==1.6.3</p>
+<p>beautifulsoup4==4.12.2</p>
+<p>cachetools==5.3.1</p>
+<p>certifi==2023.5.7</p>
+<p>charset-normalizer==3.1.0</p>
+<p>cmake==3.26.4</p>
+<p>coloredlogs==15.0.1</p>
+<p>contourpy==1.1.0</p>
+<p>customtkinter==5.2.0</p>
+<p>cycler==0.11.0</p>
+<p>Cython==0.29.35</p>
+<p>darkdetect==0.8.0</p>
+<p>easydict==1.10</p>
+<p>filelock==3.12.2</p>
+<p>flatbuffers==23.5.26</p>
+<p>fonttools==4.40.0</p>
+<p>gast==0.4.0</p>
+<p>gdown==4.7.1</p>
+<p>google-auth==2.20.0</p>
+<p>google-auth-oauthlib==1.0.0</p>
+<p>google-pasta==0.2.0</p>
+<p>grpcio==1.54.2</p>
+<p>h5py==3.9.0</p>
+<p>humanfriendly==10.0</p>
+<p>idna==3.4</p>
+<p>imageio==2.31.1</p>
+<p>importlib-metadata==6.7.0</p>
+<p>importlib-resources==5.12.0</p>
+<p>insightface==0.7.3</p>
+<p>jax==0.4.12</p>
+<p>Jinja2==3.1.2</p>
+<p>joblib==1.2.0</p>
+<p>keras==2.13.1rc0</p>
+<p>keras-nightly==2.14.0</p>
+<p>kiwisolver==1.4.4</p>
+<p>lazy_loader==0.2</p>
+<p>libclang==16.0.0</p>
+<p>lit==16.0.6</p>
+<p>Markdown==3.4.3</p>
+<p>MarkupSafe==2.1.3</p>
+<p>matplotlib==3.7.1</p>
+<p>ml-dtypes==0.2.0</p>
+<p>mpmath==1.3.0</p>
+<p>networkx==3.1</p>
+<p>numpy==1.23.5</p>
+<p>nvidia-cublas-cu11==11.10.3.66</p>
+<p>nvidia-cublas-cu12==12.1.3.1</p>
+<p>nvidia-cuda-cupti-cu11==11.7.101</p>
+<p>nvidia-cuda-nvrtc-cu11==11.7.99</p>
+<p>nvidia-cuda-runtime-cu11==11.7.99</p>
+<p>nvidia-cuda-runtime-cu12==12.1.105</p>
+<p>nvidia-cudnn-cu11==8.5.0.96</p>
+<p>nvidia-cudnn-cu12==8.9.2.26</p>
+<p>nvidia-cufft-cu11==10.9.0.58</p>
+<p>nvidia-curand-cu11==10.2.10.91</p>
+<p>nvidia-cusolver-cu11==11.4.0.1</p>
+<p>nvidia-cusparse-cu11==11.7.4.91</p>
+<p>nvidia-nccl-cu11==2.14.3</p>
+<p>nvidia-nvtx-cu11==11.7.91</p>
+<p>nvidia-tensorrt==99.0.0</p>
+<p>oauthlib==3.2.2</p>
+<p>onnx==1.14.0</p>
+<p>onnxruntime-gpu==1.13.1</p>
+<p>opencv-contrib-python==4.7.0.72</p>
+<p>opencv-python==4.7.0.72</p>
+<p>opennsfw2==0.10.2</p>
+<p>opt-einsum==3.3.0</p>
+<p>packaging==23.1</p>
+<p>Pillow==9.5.0</p>
+<p>prettytable==3.8.0</p>
+<p>protobuf==4.23.3</p>
+<p>psutil==5.9.5</p>
+<p>pyasn1==0.5.0</p>
+<p>pyasn1-modules==0.3.0</p>
+<p>pyparsing==3.1.0</p>
+<p>PySocks==1.7.1</p>
+<p>python-dateutil==2.8.2</p>
+<p>PyWavelets==1.4.1</p>
+<p>PyYAML==6.0</p>
+<p>qudida==0.0.4</p>
+<p>requests==2.31.0</p>
+<p>requests-oauthlib==1.3.1</p>
+<p>rsa==4.9</p>
+<p>scikit-image==0.21.0</p>
+<p>scikit-learn==1.2.2</p>
+<p>scipy==1.10.1</p>
+<p>six==1.16.0</p>
+<p>soupsieve==2.4.1</p>
+<p>sympy==1.12</p>
+<p>tb-nightly==2.14.0a20230621</p>
+<p>tensorboard==2.13.0</p>
+<p>tensorboard-data-server==0.7.1</p>
+<p>tensorflow==2.13.0rc1</p>
+<p>tensorflow-estimator==2.13.0rc0</p>
+<p>tensorflow-io-gcs-filesystem==0.32.0</p>
+<p>tensorrt==8.6.1</p>
+<p>tensorrt-bindings==8.6.1</p>
+<p>tensorrt-libs==8.6.1</p>
+<p>termcolor==2.3.0</p>
+<p>tf-estimator-nightly==2.14.0.dev2023062108</p>
+<p>tf-nightly==2.14.0.dev20230621</p>
+<p>threadpoolctl==3.1.0</p>
+<p>tifffile==2023.4.12</p>
+<p>torch==2.0.1</p>
+<p>torchaudio==2.0.2</p>
+<p>torchvision==0.15.2</p>
+<p>tqdm==4.65.0</p>
+<p>triton==2.0.0</p>
+<p>typing_extensions==4.5.0</p>
+<p>urllib3==1.26.16</p>
+<p>wcwidth==0.2.6</p>
+<p>Werkzeug==2.3.6</p>
+<p>wrapt==1.14.1</p>
+<p>zipp==3.15.0</p>
+</details>
+
+<h2 id="下载模型，运行"><a href="#下载模型，运行" class="headerlink" title="下载模型，运行"></a>下载模型，运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;s0md3v&#x2F;roop.git</span><br></pre></td></tr></table></figure>
+<p>然后再上面创建好的 conda 环境里运行 run.py：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python run.py --execution-provider cuda -s input_image -t input_video -o onput_video --execution-threads 4</span><br></pre></td></tr></table></figure>
+<p>实测用 4 个线程就能把显卡的 2 个 G 显存吃满，再增加线程数会报错</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/3661d922/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -185,10 +398,6 @@
         <div class="post-meta">
         
           
-              <i class="fa fa-thumb-tack"></i>
-              <font color="RED">置顶</font>
-              <span class="post-meta-divider">|</span>
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -196,7 +405,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-06-23 21:38:24 / Modified: 21:43:28" itemprop="dateCreated datePublished" datetime="2023-06-23T21:38:24+08:00">2023-06-23</time>
+              <time title="Created: 2023-06-23 21:38:24 / Modified: 21:44:23" itemprop="dateCreated datePublished" datetime="2023-06-23T21:38:24+08:00">2023-06-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,10 +479,6 @@
         <div class="post-meta">
         
           
-              <i class="fa fa-thumb-tack"></i>
-              <font color="RED">置顶</font>
-              <span class="post-meta-divider">|</span>
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -287,7 +492,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-02 17:16:42" itemprop="dateModified" datetime="2022-05-02T17:16:42+08:00">2022-05-02</time>
+                <time title="Modified: 2023-06-23 21:44:29" itemprop="dateModified" datetime="2023-06-23T21:44:29+08:00">2023-06-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -929,74 +1134,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://absinthes2049.github.io/52248d2e/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Allen Dane">
-      <meta itemprop="description" content="就做了一点微小的工作，谢谢大家">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小米 6 首席研究员的研究报告集">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/52248d2e/" class="post-title-link" itemprop="url">一次纠结的小米 6 刷机经历</a>
-        </h2>
-
-        <div class="post-meta">
-        
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2022-02-17 23:22:00 / Modified: 23:24:30" itemprop="dateCreated datePublished" datetime="2022-02-17T23:22:00+08:00">2022-02-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>看着存储空间不到 5 个 G 的手机决定手贱给小米 6 刷一次机，在看到 rom 列表中没有 MIUI 12 的线刷版本隐隐感到一丝不对劲，但还是艺高人胆大地选择了线刷 <a href="http://bigota.d.miui.com/9.9.3/sagit_images_9.9.3_20190904.0000.00_9.0_cn_b51d5ce3d8.tgz" target="_blank" rel="noopener">MIUI 10 9.9.3</a> + 卡刷 <a href="https://bigota.d.miui.com/20.3.26/miui_MI6_20.3.26_c8081cf18a_9.0.zip" target="_blank" rel="noopener">MIUI 12 20.6.18</a> 的路线，然而刷完 MIUI 10 在系统里刷 MIUI 12 的时候发现还是天真了。选官方 ROM 包的时候提示“rom包处于内测中 请确认已经登录有内测权限的小米账户”，现在哪里还有小米 6 的内测？退一万步讲就算有我还有等你内测审核完我才可以刷机？（你永远不知道小米为了让 MI6 用户换手机有多努力）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/52248d2e/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1068,7 +1205,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
