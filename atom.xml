@@ -183,18 +183,18 @@
     
     
     
-    <category term="SQL Server" scheme="https://absinthes2049.github.io/categories/SQL-Server/"/>
-    
     <category term="Big Data" scheme="https://absinthes2049.github.io/categories/Big-Data/"/>
+    
+    <category term="SQL Server" scheme="https://absinthes2049.github.io/categories/SQL-Server/"/>
     
     <category term="Sqoop" scheme="https://absinthes2049.github.io/categories/Sqoop/"/>
     
     
+    <category term="Big Data" scheme="https://absinthes2049.github.io/tags/Big-Data/"/>
+    
     <category term="SQL Server" scheme="https://absinthes2049.github.io/tags/SQL-Server/"/>
     
     <category term="Sqoop" scheme="https://absinthes2049.github.io/tags/Sqoop/"/>
-    
-    <category term="Big Data" scheme="https://absinthes2049.github.io/tags/Big-Data/"/>
     
   </entry>
   
